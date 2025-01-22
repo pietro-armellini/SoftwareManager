@@ -13,7 +13,6 @@ export default function Products() {
     <Box
     component="main"
     sx={{
-      width:100,
       backgroundColor: (theme) =>
         theme.palette.mode === 'light'
           ? theme.palette.grey[100]

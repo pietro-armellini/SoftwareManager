@@ -203,8 +203,9 @@ export default function ProductsTable() {
 			{/* Edit dialog */}
       <Dialog open={showEditDialog} onClose={closeEditDialog} PaperProps={{
         style: {
-          minWidth: 1000,
-          maxWidth: 'none', 
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 1000, 
         },
       }}>
         <DialogContent>
@@ -214,16 +215,28 @@ export default function ProductsTable() {
           <Button onClick={closeEditDialog}>Cancel</Button>
         </DialogActions>
       </Dialog>
+		
+      <Grid container wrap="nowrap" sx={{ flexWrap: { xs: "wrap", sm: "nowrap" } }}>
+				{/* Typography */}
+				<Grid item xs>
+					<Typography	sx={{ mt: 4, mb: 2, ml: 4 }} variant="h6"	component="div">
+						Products
+					</Typography>
+				</Grid>
 
-      <Typography sx={{ mt: 4, mb: 2, ml: 4 }} variant="h6" component="div">
-        Products
-      </Typography>
-      <Box textAlign="right" sx={{ marginRight: 4, marginLeft: 4, marginTop: -5 }}>
-        <Button href="/products/addproduct" aria-label="add product" size='small'>
-          <AddSharpIcon />
-          <Typography sx={{ fontSize: 15 }}>Add Product</Typography>
-        </Button>
-      </Box>
+				{/* Box with IconButton */}
+				<Grid item sx={{ textAlign: "right"}}
+				>
+					<IconButton	href="/products/addproduct"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
+					>
+						<AddSharpIcon fontSize="small" />
+						<Typography sx={{ fontSize: 17 }}>New Product</Typography>
+					</IconButton>
+				</Grid>
+			</Grid>
+
+
+
 
 			{/* Search filter */}
       <Box sx={{ marginRight: 4, marginLeft: 4, marginTop: 2 }}>
@@ -237,14 +250,14 @@ export default function ProductsTable() {
       </Box>
 
 			{/* Main Table */}
-      <TableContainer component={Paper} sx={{ paddingLeft: 3, paddingRight: 3, mt: 2 }}>
-        <Table sx={{ minWidth: 300, marginBottom: 3 }} size="small" aria-label="a dense table">
+      <TableContainer component={Paper} sx={{ paddingLeft: 3, paddingRight: 3, mt: 2}}>
+        <Table sx={{ marginBottom: 3}} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
 							{/* Columns names */}
-              <TableCell sx={{ fontSize: 15, minWidth: 200 }}><b>Name</b></TableCell>
-              <TableCell sx={{ fontSize: 15, minWidth: 300 }}><b>Firmwares</b></TableCell>
-              <TableCell sx={{ fontSize: 15, width: 40 }} align="center"><b>Actions</b></TableCell>
+              <TableCell sx={{ fontSize: 15}}><b>Name</b></TableCell>
+              <TableCell sx={{ fontSize: 15}}><b>Firmwares</b></TableCell>
+              <TableCell sx={{ fontSize: 15}} align="right"><b>Actions</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -272,29 +285,44 @@ export default function ProductsTable() {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    <Typography sx={{ fontSize: 13 }}>{row.name}</Typography>
-                  </TableCell>
+										<Typography
+											sx={{
+												fontSize: 13,
+												wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+												overflow: 'hidden',
+												whiteSpace: 'normal'       // Permette al testo di andare a capo
+											}}
+										>
+											{row.name}
+										</Typography>
+									</TableCell>
+
                   <TableCell align="left">
                     {row.firmware?.map(firmware => (
-                      <Tooltip arrow title={firmware.partNumber} key={firmware.id} placement="left">
-                        <Typography sx={{ fontSize: 13 }}>{firmware.partNumber + " | " + firmware.versionString}</Typography>
-                      </Tooltip>
+                        <Typography sx={{
+													fontSize: 13,
+													wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+													overflow: 'hidden',
+													whiteSpace: 'normal'       // Permette al testo di andare a capo
+												}}>
+													{firmware.partNumber + " | " + firmware.versionString}
+												</Typography>
                     ))}
                   </TableCell>
                   <TableCell>
-                    <Grid container spacing={0}>
-                      <Grid item xs={6}>
-                        <IconButton onClick={(event) => handleOpenEditDialog(row)}>
-                          <EditSharpIcon fontSize='small' />
-                        </IconButton>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <IconButton onClick={(event) => handleOpenConfirmationDialog(row)} size='small'>
-                          <DeleteSharpIcon fontSize='small' />
-                        </IconButton>
-                      </Grid>
-                    </Grid>
-                  </TableCell>
+										<Grid container spacing={0} justifyContent="flex-end" alignItems="center">
+											<Grid item>
+												<IconButton onClick={(event) => handleOpenEditDialog(row)}  size="small">
+													<EditSharpIcon fontSize="small" />
+												</IconButton>
+											</Grid>
+											<Grid item>
+												<IconButton onClick={(event) => handleOpenConfirmationDialog(row)} size="small">
+													<DeleteSharpIcon fontSize="small" />
+												</IconButton>
+											</Grid>
+										</Grid>
+									</TableCell>
                 </TableRow>
               ))
             )}
