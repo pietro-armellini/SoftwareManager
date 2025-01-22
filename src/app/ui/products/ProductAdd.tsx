@@ -63,41 +63,39 @@ export default function ProductAdd() {
 
 
   return (  
-    <Box sx={{flexGrow: 1, paddingLeft:3, paddingRight:3, marginTop:0, marginBottom:3}} >
-      <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+    <Box>
+      <Typography sx={{ mt: 4, mb: 2, ml:4 }} variant="h6" component="div">
         Add New Product
       </Typography>
-      <Divider />
+      <Divider sx={{ml:4}} />
 			{/* Loading component */}
       {loading ? ( // Check if data is loading
-          <Box display="flex" alignItems="center" justifyContent="center" sx={{mt:5}}>
+          <Box display="flex" alignItems="center" justifyContent="center" sx={{mt:5, mb:5}}>
             <CircularProgress /> {/* Loading spinner */}
           </Box>
       ):(
       <form noValidate autoComplete="off">
-        <Grid container spacing={3} sx={{marginLeft:-6}}>
+        <Grid container spacing={2} sx={{pl:4, pr:4, pb:4}} >
           <Grid item xs={12}>
-            <Typography sx={{ ml:3, mt:3}} variant="h6" component="div">
+            <Typography sx={{ ml:0, mt:3}} variant="h6" component="div">
                 Product Information
               </Typography>
           </Grid>
-          <Grid item xs={12}>
-            <Grid sx={{margin:0}} container spacing={3}>
-              <Grid item xs={12}>
-                <FormInputText name="name" control={control} label="Name"/>
-              </Grid>
-            </Grid>
+					<Grid item xs={12}>
+						<FormInputText name="name" control={control} label="Name"/>
           </Grid>
-          
-        </Grid>
-        <Box display="flex" justifyContent="center" sx={{mt:5}}>
-        <Button sx={{mr:3, p:1}} variant="outlined" onClick={() => reset()}>
-          Reset Data
-        </Button>
-        <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-          Add Product
-        </Button>
-        </Box>
+        	<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
+						<Button variant="outlined" onClick={() => reset()} sx={{width: { xs: '50%', sm: 'auto' }}}>
+							Reset Data
+						</Button>
+					</Grid>
+					<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
+						<Button variant="contained" onClick={handleSubmit(onSubmit)} sx={{width: { xs: '50%', sm: 'auto' }}}>
+							Add Product
+						</Button>
+					</Grid>
+
+				</Grid>
       </form>
       )}
     </Box>
