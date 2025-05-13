@@ -48,7 +48,7 @@ export default function ProductsTable() {
   useEffect(() => {
 		setLoading(true); // Set loading to true before fetching
     fetchData();
-		//if param succ is true it means productAdd component just pushed to the table after successfully adding a new entry
+		//if param succ is true it means ProductAdd component just pushed to the table after successfully adding a new entry
     if (searchParams.has('succ')) {
       router.push("/products");
       setAddedSnackbar(true);
@@ -89,17 +89,16 @@ export default function ProductsTable() {
       }
     })
     .then(data => {
+			setDeletedName(objectToDelete.name);
 			//code == 1 => success
       if(data.code == 1){
         setDeletedSnackbar(true);
-        setDeletedName(objectToDelete.name);
-				//refetch data 
         fetchData();
         handleCloseConfirmationDialog();
         setObjectToDelete(null);
-      } else {
+      } 
+			else {
         setFailedDeletedSnackbar(true);
-        setDeletedName(objectToDelete.name);
       }
     });  
   };
@@ -225,8 +224,7 @@ export default function ProductsTable() {
 				</Grid>
 
 				{/* Box with IconButton */}
-				<Grid item sx={{ textAlign: "right"}}
-				>
+				<Grid item sx={{ textAlign: "right"}}				>
 					<IconButton	href="/products/addproduct"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
 					>
 						<AddSharpIcon fontSize="small" />
@@ -275,7 +273,7 @@ export default function ProductsTable() {
 							//When there are no data to display
               <TableRow>
                 <TableCell colSpan={3} align="center">
-                  <Typography variant="body2" sx={{ mt: 2 }}>No products available.</Typography>
+                  <Typography variant="body2" sx={{ mt: 2 }}>No products found.</Typography>
                 </TableCell>
               </TableRow>
             ) : (
@@ -296,7 +294,6 @@ export default function ProductsTable() {
 											{row.name}
 										</Typography>
 									</TableCell>
-
                   <TableCell align="left">
                     {row.firmware?.map(firmware => (
                         <Typography sx={{
@@ -312,13 +309,13 @@ export default function ProductsTable() {
                   <TableCell>
 										<Grid container spacing={0} justifyContent="flex-end" alignItems="center">
 											<Grid item>
-												<IconButton onClick={(event) => handleOpenEditDialog(row)}  size="small">
-													<EditSharpIcon fontSize="small" />
+												<IconButton onClick={(event) => handleOpenEditDialog(row)} size='small'>
+													<EditSharpIcon fontSize='small'/>
 												</IconButton>
 											</Grid>
 											<Grid item>
-												<IconButton onClick={(event) => handleOpenConfirmationDialog(row)} size="small">
-													<DeleteSharpIcon fontSize="small" />
+												<IconButton onClick={(event) => handleOpenConfirmationDialog(row)} size='small'>
+													<DeleteSharpIcon fontSize='small'/>
 												</IconButton>
 											</Grid>
 										</Grid>

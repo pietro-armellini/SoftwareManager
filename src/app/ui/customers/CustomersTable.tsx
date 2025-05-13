@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -25,14 +23,14 @@ import CustomerEdit from './CustomerEdit';
 export default function CustomersTable() {
   const [data, setData] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+	const [loading, setLoading] = useState(true); // Add loading state
   const [deletedSnackbar, setDeletedSnackbar] = useState(false);
-  const [loading, setLoading] = useState(true); // Add loading state
   const [failedDeletedSnackbar, setFailedDeletedSnackbar] = useState(false);
   const [addedSnackbar, setAddedSnackbar] = useState(false);
-	//state variable to set the just deleted object
-  const [deletedName, setDeletedName] = useState('');
 	//state variable to set the object to delete when pressing the delete icon
 	const [objectToDelete, setObjectToDelete] = useState<any>(null);
+	//state variable to set the just deleted object
+  const [deletedName, setDeletedName] = useState('');
 	//state variable to set the object to edit
   const [objectToEdit, setObjectToEdit] = useState('');
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -40,7 +38,7 @@ export default function CustomersTable() {
   const [editedSnackbar, setEditedSnackbar] = useState(false);
 
   const router = useRouter();
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
   
   useEffect(() => {
     setLoading(true); // Set loading to true before fetching
@@ -50,11 +48,9 @@ export default function CustomersTable() {
       router.push("/customers");
       setAddedSnackbar(true);
     }
-    
   }, []);
 
   const fetchData = async () => {
-    
     const response = await fetch("/api/customers/detailedlist");
     const jsonData = await response.json();
     setData(jsonData.data);
@@ -96,26 +92,25 @@ export default function CustomersTable() {
         handleCloseConfirmationDialog();
         setObjectToDelete(null);
       }
-      else{
+      else {
         setFailedDeletedSnackbar(true);
       }
     });  
-    
   };
 
 	//function to close the edit dialog
   const closeEditDialog = () => {
     setShowEditDialog(false);
-  }
+  };
 
 	//function to open the edit dialog
-  const handleOpenEditDialog = (event, component) => {
+  const handleOpenEditDialog = (component) => {
     setObjectToEdit(component);
     setShowEditDialog(true); 
   };
 
 	//function to open the delete confirmation dialog
-  const handleOpenConfirmationDialog = (event, component) => {
+  const handleOpenConfirmationDialog = (component) => {
     setObjectToDelete(component);
     setShowConfirmationDialog(true);
   };
@@ -127,13 +122,11 @@ export default function CustomersTable() {
   };
 
 	//function used by the Edit Dialog to close itself when the editing went successfully
-  const handleCloseEditDialogFromChild = (element, type) => {
+  const handleCloseEditDialogFromChild = () => {
     closeEditDialog();
     setEditedSnackbar(true);
     fetchData();
-  }
-
-
+  };
 
   return (
     <Box>
@@ -141,7 +134,7 @@ export default function CustomersTable() {
       <Snackbar
         open={deletedSnackbar}
         autoHideDuration={3000}
-        onClose={()=>{setDeletedSnackbar(false)}}
+        onClose={() => {setDeletedSnackbar(false)}}
       >
         <SnackbarContent
           sx={{backgroundColor: lightBlue[600]}}
@@ -153,7 +146,7 @@ export default function CustomersTable() {
       <Snackbar
         open={failedDeletedSnackbar}
         autoHideDuration={3000}
-        onClose={()=>{setFailedDeletedSnackbar(false)}}
+        onClose={() => {setFailedDeletedSnackbar(false)}}
       >
         <SnackbarContent
           sx={{backgroundColor: red[600]}}
@@ -177,7 +170,7 @@ export default function CustomersTable() {
       <Snackbar
         open={editedSnackbar}
         autoHideDuration={3000}
-        onClose={()=>{setEditedSnackbar(false)}}
+        onClose={() => {setEditedSnackbar(false)}}
       > 
         <SnackbarContent
           sx={{backgroundColor: green[600]}}
@@ -204,8 +197,9 @@ export default function CustomersTable() {
 			{/* Edit dialog */}
       <Dialog open={showEditDialog} onClose={closeEditDialog} PaperProps={{
         style: {
-          minWidth: 1000,
-          maxWidth: 'none',
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 1000, 
         },
       }}>
         <DialogContent>
@@ -216,15 +210,23 @@ export default function CustomersTable() {
         </DialogActions>
       </Dialog>
 
-      <Typography sx={{ mt: 4, mb: 2, ml:4 }} variant="h6" component="div">
-        Customers
-      </Typography>
-      <Box textAlign="right" sx={{ marginRight: 4, marginLeft: 4, marginTop:-5}}>
-        <Button href="/customers/addcustomer" size='small'>
-          <AddSharpIcon />
-          <Typography sx={{fontSize:15}}>Add Customer</Typography>
-        </Button>
-      </Box>
+			<Grid container wrap="nowrap" sx={{ flexWrap: { xs: "wrap", sm: "nowrap" } }}>
+				{/* Typography */}
+				<Grid item xs>
+					<Typography sx={{ mt: 4, mb: 2, ml: 4 }} variant="h6" component="div">
+						Customers
+					</Typography>
+				</Grid>
+
+				{/* Box with IconButton */}
+				<Grid item sx={{ textAlign: "right"}}>
+					<IconButton	href="/customers/addcustomer" size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
+					>
+					<AddSharpIcon fontSize="small" />
+							<Typography sx={{ fontSize: 17 }}>New Customer</Typography>
+					</IconButton>
+				</Grid>
+			</Grid>
 
 			{/* Search filter */}
       <Box sx={{ marginRight: 4, marginLeft: 4, marginTop:2}}>
@@ -239,21 +241,21 @@ export default function CustomersTable() {
 
 			{/* Main Table */}
       <TableContainer component={Paper} sx={{paddingLeft:3, paddingRight:3, mt:2}}>
-        <Table sx={{ minWidth: 300, marginBottom:3}} size="small" aria-label="a dense table">
+        <Table sx={{marginBottom: 3}} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
 							{/* Columns names */}
-              <TableCell sx={{ fontSize: 15, minWidth: 200}}><b>Name</b></TableCell>
-              <TableCell sx={{ fontSize: 15,minWidth: 300}}><b>Firmwares</b></TableCell>
-              <TableCell sx={{ fontSize: 15, width:40}} align="center"><b>Actions</b></TableCell>
-
+              <TableCell sx={{ fontSize: 15}}><b>Name</b></TableCell>
+              <TableCell sx={{ fontSize: 15}}><b>Firmwares</b></TableCell>
+              <TableCell sx={{ fontSize: 15}} align="right"><b>Actions</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
 					{/* Loading component */}
-          {loading ? ( // Conditional rendering for loading state
+          {loading ? (
+						 //Conditional rendering for loading state
               <TableRow>
-                <TableCell colSpan={4} align="center">
+                <TableCell colSpan={3} align="center">
                   <CircularProgress /> {/* Loading spinner */}
                   <Typography variant="body2" sx={{ mt: 2 }}>Loading data...</Typography>
                 </TableCell>
@@ -261,7 +263,7 @@ export default function CustomersTable() {
             ) : filteredData.length === 0 ? (
 							//When there are no data to display
               <TableRow>
-                <TableCell colSpan={4} align="center">
+                <TableCell colSpan={3} align="center">
                   <Typography variant="body2" sx={{ mt: 2 }}>No customers found.</Typography>
                 </TableCell>
               </TableRow>
@@ -272,30 +274,43 @@ export default function CustomersTable() {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                    <Typography sx={{ fontSize: 13}}>{row.name}</Typography>
+                    <Typography
+											sx={{
+												fontSize: 13,
+												wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+												overflow: 'hidden',
+												whiteSpace: 'normal'       // Permette al testo di andare a capo
+											}}
+										>
+											{row.name}
+										</Typography>
                 </TableCell>
                 <TableCell align="left">
                 {row.firmware?.map(firmware => (
-                  <Tooltip arrow title={firmware.partNumber} key={firmware.id } placement="left">
-                    <Typography sx={{fontSize:13}}>{firmware.partNumber + " | " + firmware.versionString}</Typography>
-                  </Tooltip>
+                  <Typography sx={{
+										fontSize: 13,
+										wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+										overflow: 'hidden',
+										whiteSpace: 'normal'       // Permette al testo di andare a capo
+									}}>
+										{firmware.partNumber + " | " + firmware.versionString}
+									</Typography>
                 ))}
                 </TableCell>
                 <TableCell>
-                    <Grid container spacing={0}>
-                      <Grid item xs={6}>
-                        <IconButton onClick={(event) =>  handleOpenEditDialog(event, row)}>
+                    <Grid container spacing={0} justifyContent="flex-end" alignItems="center">
+                      <Grid item>
+                        <IconButton onClick={(event) => handleOpenEditDialog(row)} size='small'>
                           <EditSharpIcon fontSize='small'/>
                         </IconButton>
                       </Grid>
-                      <Grid item xs={6}>
-                        <IconButton onClick={(event) =>  handleOpenConfirmationDialog(event, row)} size='small'>
+                      <Grid item>
+                        <IconButton onClick={(event) => handleOpenConfirmationDialog(row)} size='small'>
                           <DeleteSharpIcon fontSize='small'/>
                         </IconButton>
                       </Grid>
                       </Grid>
                 </TableCell>
-              
               </TableRow>
             ))
           )}
