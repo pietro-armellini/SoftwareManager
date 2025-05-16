@@ -4,9 +4,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { FormInputText } from "../form/FormInputText";
 import { useForm } from "react-hook-form";
-
-import { Button, CircularProgress, Divider, styled } from '@mui/material';
 import { useState } from 'react';
+import { Button, CircularProgress, Divider, styled } from '@mui/material';
 import { ProductAddFormSchema } from '@/utility/ZodHelper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -14,7 +13,6 @@ import { z } from 'zod';
 
 //Component to edit products
 export default function ProductEdit({ elementToEdit, handleCloseFromParentDialog }) {
-
   const [loading, setLoading] = useState(false); // Loading state
   
 	//default form's values
@@ -62,11 +60,11 @@ export default function ProductEdit({ elementToEdit, handleCloseFromParentDialog
   };
 
   return (
-    <Box sx={{flexGrow: 1, pl:3, pr:3, mt:0, mb:3}} >
-      <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+    <Box>
+			<Typography sx={{ mt: 4, mb: 2, ml:4 }} variant="h6" component="div">
         Edit Product
       </Typography>
-      <Divider />
+			<Divider sx={{ml:4}} />
 			{/* Loading component */}
       {loading ? ( 
           <Box display="flex" alignItems="center" justifyContent="center" sx={{mt:5}}>
@@ -74,16 +72,16 @@ export default function ProductEdit({ elementToEdit, handleCloseFromParentDialog
           </Box>
       ):(
       <form noValidate autoComplete="off">
-        <Grid sx={{ml:-3, mt:0}} container spacing={3}>
+				<Grid container spacing={2} sx={{pl:4, pr:4, pb:4}} >
           <Grid item xs={12}>
-                <FormInputText name="name" control={control} label="Name"/>
+						<FormInputText name="name" control={control} label="Name"/>
           </Grid>
-        </Grid>
-        <Box display="flex" justifyContent="center" sx={{mt:5}}>
-          <Button sx={{mr:3, p:1}} variant="contained" onClick={handleSubmit(onSubmit)}>
-            Edit Product
-          </Button>
-        </Box>
+					<Grid item xs={12} sm={12} sx={{textAlign:{sm: "ecenter", xs:"center"}}}>
+						<Button sx={{mr:3, p:1}} variant="contained" onClick={handleSubmit(onSubmit)}>
+							Edit Product
+						</Button>
+					</Grid>
+				</Grid>
       </form>
       )}
     </Box>
