@@ -7,15 +7,13 @@ import { useForm } from "react-hook-form";
 import { useState } from 'react';
 import { Button, CircularProgress, Divider } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { ProductAddFormSchema } from '@/utility/ZodHelper';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 
 //Component to add new products
 export default function ProductAdd() {
-
-	//state variables
   const [loading, setLoading] = useState(false); // Loading state
   const router = useRouter();
 
@@ -85,16 +83,15 @@ export default function ProductAdd() {
 						<FormInputText name="name" control={control} label="Name"/>
           </Grid>
         	<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
-						<Button variant="outlined" onClick={() => reset()} sx={{width: { xs: '50%', sm: 'auto' }}}>
+						<Button variant="outlined" onClick={() => reset()} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
 							Reset Data
 						</Button>
 					</Grid>
 					<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
-						<Button variant="contained" onClick={handleSubmit(onSubmit)} sx={{width: { xs: '50%', sm: 'auto' }}}>
+						<Button variant="contained" onClick={handleSubmit(onSubmit)} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
 							Add Product
 						</Button>
 					</Grid>
-
 				</Grid>
       </form>
       )}
