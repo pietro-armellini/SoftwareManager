@@ -10,7 +10,6 @@ import { ProductAddFormSchema } from '@/utility/ZodHelper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-
 //Component to edit products
 export default function ProductEdit({ elementToEdit, handleCloseFromParentDialog }) {
   const [loading, setLoading] = useState(false); // Loading state
@@ -21,8 +20,8 @@ export default function ProductEdit({ elementToEdit, handleCloseFromParentDialog
   };
 
   type FormFields = z.infer<typeof ProductAddFormSchema>;
-
-  const { handleSubmit, control } = useForm<FormFields>({
+	//function to handle submit
+	const { handleSubmit, control } = useForm<FormFields>({
     mode: "onBlur",
     reValidateMode: "onBlur",
     resolver: zodResolver(ProductAddFormSchema),
@@ -55,8 +54,7 @@ export default function ProductEdit({ elementToEdit, handleCloseFromParentDialog
       if(data.code == 1){
         handleCloseFromParentDialog();
       }
-    }).catch(() => setLoading(false)) //set loading to false if the result is an error
-    
+    }).catch(() => setLoading(false));//set loading to false if the result is an error
   };
 
   return (
@@ -66,7 +64,7 @@ export default function ProductEdit({ elementToEdit, handleCloseFromParentDialog
       </Typography>
 			<Divider sx={{ml:4}} />
 			{/* Loading component */}
-      {loading ? ( 
+      {loading ? ( // Check if data is loading
           <Box display="flex" alignItems="center" justifyContent="center" sx={{mt:5}}>
             <CircularProgress /> {/* Loading spinner */}
           </Box>
