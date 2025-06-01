@@ -257,8 +257,9 @@ export default function FirmwaresTable() {
 			{/* Edit functions connections dialog */}
       <Dialog open={showEditFunctionDialog} onClose={closeEditFunctionsDialog} fullWidth PaperProps={{
         style: {
-          minWidth: 1000,
-          maxWidth: 'none', // Set your desired width here
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 1000, 
         },
       }}>
         <DialogContent>
