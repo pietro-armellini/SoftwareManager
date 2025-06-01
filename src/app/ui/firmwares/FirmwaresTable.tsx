@@ -22,8 +22,8 @@ import { FunctionsListEdit } from './FunctionsListEdit';
 export default function FirmwaresTable() {
   const [data, setData] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [deletedSnackbar, setDeletedSnackbar] = useState(false);
   const [loading, setLoading] = useState(true); // Loading state
+  const [deletedSnackbar, setDeletedSnackbar] = useState(false);
   const [failedDeletedSnackbar, setFailedDeletedSnackbar] = useState(false);
   const [addedSnackbar, setAddedSnackbar] = useState(false);
 	//state variable to set the object to delete when pressing the delete icon
@@ -43,21 +43,20 @@ export default function FirmwaresTable() {
   const searchParams = useSearchParams()
   
   useEffect(() => {
+		setLoading(true); // Set loading to true before fetching
     fetchData();
 		//if param succ is true it means FunctionAdd component just pushed to the table after successfully adding a new entry
     if (searchParams.has('succ')){
       router.push("/firmwares");
       setAddedSnackbar(true);
-      
     }
   }, []);
 
   const fetchData = async () => {
-    setLoading(true); // Set loading to true before fetching
     const response = await fetch("/api/firmwares/detailedlist");
     const jsonData = await response.json();
     setData(jsonData.data);
-    setLoading(false);
+        setLoading(false); // Set loading to false after fetching
   };
 
 	//filtered data based on the seach filter
@@ -99,7 +98,6 @@ export default function FirmwaresTable() {
         setFailedDeletedSnackbar(true);
       }
     });  
-    
   };
 
 	//function to close the edit base data dialog
@@ -138,7 +136,7 @@ export default function FirmwaresTable() {
   }
 
 	//function to open the delete confirmation dialog
-	const handleOpenConfirmationDialog = (event, component) => {
+	const handleOpenConfirmationDialog = (component) => {
     setObjectToDelete(component);
     setShowConfirmationDialog(true);
   };
@@ -243,8 +241,9 @@ export default function FirmwaresTable() {
 			{/* Edit base data dialog */}
       <Dialog open={showEditDialog} onClose={closeEditDialog} PaperProps={{
         style: {
-          minWidth: 1000,
-          maxWidth: 'none', // Set your desired width here
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 1000, 
         },
       }}>
         <DialogContent>
@@ -270,15 +269,23 @@ export default function FirmwaresTable() {
         </DialogActions>
       </Dialog>
 
-      <Typography sx={{ mt: 4, mb: 2, ml:4 }} variant="h6" component="div">
-        Firmwares
-      </Typography>
-      <Box textAlign="right" sx={{ marginRight: 4, marginLeft: 4, marginTop:-5}}>
-        <Button href="/firmwares/addfirmware" size='small'>
-          <AddSharpIcon />
-          <Typography sx={{fontSize:15}}>Add Firmware</Typography>
-        </Button>
-      </Box>
+		<Grid container wrap="nowrap" sx={{ flexWrap: { xs: "wrap", sm: "nowrap" } }}>
+			
+      <Grid item xs>
+                <Typography	sx={{ mt: 4, mb: 2, ml: 4 }} variant="h6"	component="div">
+                  Firmwares
+                </Typography>
+              </Grid>
+      
+      <Grid item sx={{ textAlign: "right"}}				>
+					<IconButton	href="/products/addproduct"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
+					>
+						<AddSharpIcon fontSize="small" />
+						<Typography sx={{ fontSize: 17 }}>New Firmware</Typography>
+					</IconButton>
+				</Grid>
+            </Grid>
+      
 
 			{/* Search filter */}
       <Box sx={{ marginRight: 4, marginLeft: 4, marginTop:2}}>
@@ -293,17 +300,17 @@ export default function FirmwaresTable() {
 
 			{/* Main Table */}
       <TableContainer component={Paper} sx={{paddingLeft:3, paddingRight:3, mt:2}}>
-        <Table sx={{ minWidth: 300, marginBottom:3}} size="small" aria-label="a dense table">
+        <Table sx={{ marginBottom:3}} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
 
 							{/* Columns names */}
-              <TableCell sx={{ fontSize: 15, minWidth: 200}}><b>Part Number </b></TableCell>
+              <TableCell sx={{ fontSize: 15}}><b>Part Number </b></TableCell>
               <TableCell sx={{ fontSize: 15}}><b>Version String</b></TableCell>
               <TableCell sx={{ fontSize: 15}}><b>Component Type</b></TableCell>
               <TableCell sx={{ fontSize: 15}}><b>Customer</b></TableCell>
               <TableCell sx={{ fontSize: 15}}><b>Product</b></TableCell>
-              <TableCell sx={{ fontSize: 15, width:40}} align="center"><b>Actions</b></TableCell>
+              <TableCell sx={{ fontSize: 15}} align="right"><b>Actions</b></TableCell>
 
             </TableRow>
           </TableHead>
@@ -331,35 +338,79 @@ export default function FirmwaresTable() {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                    <Typography sx={{ fontSize: 13}}>{row.partNumber}</Typography>
+                                    <Typography
+                                      sx={{
+                                        fontSize: 13,
+                                        wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                        overflow: 'hidden',
+                                        whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                      }}
+                                    >
+                                      {row.partNumber}
+                                    </Typography>
                 </TableCell>
-                <TableCell align="left">
-                  <Typography sx={{ fontSize: 13}}>{row.versionString}</Typography>
+                <TableCell component="th" scope="row">
+                                    <Typography
+                                      sx={{
+                                        fontSize: 13,
+                                        wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                        overflow: 'hidden',
+                                        whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                      }}
+                                    >
+                                      {row.versionString}
+                                    </Typography>
+								</TableCell>
+                <TableCell component="th" scope="row">
+                                    <Typography
+                                      sx={{
+                                        fontSize: 13,
+                                        wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                        overflow: 'hidden',
+                                        whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                      }}
+                                    >
+                                      {row.componentType.name}
+                                    </Typography>
                 </TableCell>
-                <TableCell align="left">
-                    <Typography sx={{fontSize:13}}>{row.componentType.name}</Typography>
+                <TableCell component="th" scope="row">
+                                    <Typography
+                                      sx={{
+                                        fontSize: 13,
+                                        wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                        overflow: 'hidden',
+                                        whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                      }}
+                                    >
+                                      {row.customer.name}
+                                    </Typography>
                 </TableCell>
-                <TableCell align="left">
-                    <Typography sx={{fontSize:13}}>{row.customer.name}</Typography>
-                </TableCell>
-                <TableCell align="left">
-                    <Typography sx={{fontSize:13}}>{row.product.name}</Typography>
+                <TableCell component="th" scope="row">
+                                    <Typography
+                                      sx={{
+                                        fontSize: 13,
+                                        wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                        overflow: 'hidden',
+                                        whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                      }}
+                                    >
+                                      {row.product.name}
+                                    </Typography>
                 </TableCell>
                 <TableCell>
-                    <Grid container spacing={0}>
-                      <Grid item xs={6}>
+										<Grid container spacing={0} justifyContent="flex-end" alignItems="center">
+                      <Grid item>
                         <IconButton onClick={(event) => handleClickEditMenu(event, row)}>
                           <EditSharpIcon fontSize='small'/>
                         </IconButton>
                       </Grid>
-                      <Grid item xs={6}>
-                        <IconButton onClick={(event) =>  handleOpenConfirmationDialog(event, row)} size='small'>
+                      <Grid item>
+                        <IconButton onClick={(event) => handleOpenConfirmationDialog(row)} size='small'>
                           <DeleteSharpIcon fontSize='small'/>
                         </IconButton>
                       </Grid>
                       </Grid>
                 </TableCell>
-              
               </TableRow>
             ))
           )}

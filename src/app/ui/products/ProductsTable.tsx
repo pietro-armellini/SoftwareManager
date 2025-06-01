@@ -97,7 +97,7 @@ export default function ProductsTable() {
         handleCloseConfirmationDialog();
         setObjectToDelete(null);
       } 
-			else {
+			else{
         setFailedDeletedSnackbar(true);
       }
     });  
