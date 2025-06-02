@@ -273,10 +273,10 @@ export default function FirmwaresTable() {
 		<Grid container wrap="nowrap" sx={{ flexWrap: { xs: "wrap", sm: "nowrap" } }}>
 			
       <Grid item xs>
-                <Typography	sx={{ mt: 4, mb: 2, ml: 4 }} variant="h6"	component="div">
-                  Firmwares
-                </Typography>
-              </Grid>
+        <Typography	sx={{ mt: 4, mb: 2, ml: 4 }} variant="h6"	component="div">
+          Firmwares
+        </Typography>
+      </Grid>
       
       <Grid item sx={{ textAlign: "right"}}				>
 					<IconButton	href="/products/addproduct"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}

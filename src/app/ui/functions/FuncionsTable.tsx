@@ -103,8 +103,6 @@ export default function FunctionsTable() {
         setFailedDeletedSnackbar(true);
       }
     });  
-
-    
   };
 
 	//function to close the edit dialog
@@ -113,13 +111,13 @@ export default function FunctionsTable() {
   };
 
 	//function to open the edit dialog
-  const handleOpenEditDialog = (event, component) => {
+  const handleOpenEditDialog = (component) => {
     setObjectToEdit(component);
     setShowEditDialog(true);
   };
 
 	//function to open the delete confirmation dialog
-  const handleOpenConfirmationDialog = (event, component) => {
+  const handleOpenConfirmationDialog = (component) => {
     setObjectToDelete(component);
     setShowConfirmationDialog(true);
   };
@@ -221,8 +219,9 @@ export default function FunctionsTable() {
 			{/* Edit dialog */}
       <Dialog open={showEditDialog} onClose={closeEditDialog} PaperProps={{
         style: {
-          minWidth: 1000,
-          maxWidth: 'none', // Set your desired width here
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 1000, 
         },
       }}>
         <DialogContent>
@@ -232,16 +231,22 @@ export default function FunctionsTable() {
           <Button onClick={closeEditDialog}>Cancel</Button>
         </DialogActions>
       </Dialog>
-
-      <Typography sx={{ mt: 4, mb: 2, ml: 4 }} variant="h6" component="div">
-        Functions
-      </Typography>
-      <Box textAlign="right" sx={{ marginRight: 4, marginLeft: 4, marginTop: -5 }}>
-        <Button href="/functions/addfunction" aria-label="add board" size='small'>
-          <AddSharpIcon />
-          <Typography sx={{ fontSize: 15 }}>Add Function</Typography>
-        </Button>
-      </Box>
+<Grid container wrap="nowrap" sx={{ flexWrap: { xs: "wrap", sm: "nowrap" } }}>
+			
+      <Grid item xs>
+        <Typography	sx={{ mt: 4, mb: 2, ml: 4 }} variant="h6"	component="div">
+          Functions
+        </Typography>
+      </Grid>
+      
+      <Grid item sx={{ textAlign: "right"}}				>
+					<IconButton	href="/products/addproduct"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
+					>
+						<AddSharpIcon fontSize="small" />
+						<Typography sx={{ fontSize: 17 }}>New Function</Typography>
+					</IconButton>
+				</Grid>
+            </Grid>
 
 			{/* Search filter */}
       <Box sx={{ marginRight: 4, marginLeft: 4, marginTop: 2 }}>
@@ -256,17 +261,17 @@ export default function FunctionsTable() {
 
 			{/* Main Table */}
       <TableContainer component={Paper} sx={{ paddingLeft: 3, paddingRight: 3, mt: 2 }}>
-        <Table sx={{ minWidth: 300, marginBottom: 3 }} size="small" aria-label="a dense table">
+        <Table sx={{marginBottom: 3 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
 							{/* Columns names */}
               <TableCell sx={{ fontSize: 15 }} align="left"><b>Strategic Layer</b> </TableCell>
               <TableCell sx={{ fontSize: 15 }} align="left"><b>Operational Layer</b></TableCell>
               <TableCell sx={{ fontSize: 15 }} align="left"><b>Framework Layer</b></TableCell>
-              <TableCell sx={{ fontSize: 15, minWidth: 200 }}><b>Name</b></TableCell>
+              <TableCell sx={{ fontSize: 15 }}><b>Name</b></TableCell>
               <TableCell sx={{ fontSize: 15 }} align="left"><b>Function Level</b></TableCell>
               <TableCell sx={{ fontSize: 15 }} align="center"><b>Lowest Level</b></TableCell>
-              <TableCell sx={{ fontSize: 15, width: 40 }} align="center"><b>Actions</b></TableCell>
+              <TableCell sx={{ fontSize: 15 }} align="right"><b>Actions</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -291,41 +296,94 @@ export default function FunctionsTable() {
                   key={row.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
-                    <Typography sx={{ fontSize: 13 }}>{getParentNames(row)[0]}</Typography>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Typography sx={{ fontSize: 13 }}>{(getParentNames(row)[1] != null ? getParentNames(row)[1] : "-")}</Typography>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Typography sx={{ fontSize: 13 }}>
-                      {(row.lowestLevel && row.functionLevel.name === "Core Level" || getParentNames(row)[2] == null ? "-" : getParentNames(row)[2])}
-                    </Typography>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Tooltip arrow title={row.functionLevel.name} key={row.id} placement="left">
-                      <Typography sx={{ fontSize: 13 }}><b>{row.name}</b></Typography>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Typography sx={{ fontSize: 13 }}>{row.functionLevel?.name}</Typography>
-                  </TableCell>
-                  <TableCell align="center">
-                    {String(row.lowestLevel) === "true" ? (
-                      <DoneSharpIcon fontSize='small' sx={{ color: "green" }} />
-                    ) : (
-                      <CloseSharpIcon fontSize='small' sx={{ color: "red" }} />
-                    )}
-                  </TableCell>
+
+									<TableCell component="th" scope="row">
+                                                      <Typography
+                                                        sx={{
+                                                          fontSize: 13,
+                                                          wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                                          overflow: 'hidden',
+                                                          whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                                        }}
+                                                      >
+                                                        {getParentNames(row)[0]}
+                                                      </Typography>
+                    </TableCell>
+										<TableCell component="th" scope="row">
+                                                      <Typography
+                                                        sx={{
+                                                          fontSize: 13,
+                                                          wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                                          overflow: 'hidden',
+                                                          whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                                        }}
+                                                      >
+                                                        {(getParentNames(row)[1] != null ? getParentNames(row)[1] : "-")}
+                                                      </Typography>
+                    </TableCell>						
+                    <TableCell component="th" scope="row">
+                                                      <Typography
+                                                        sx={{
+                                                          fontSize: 13,
+                                                          wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                                          overflow: 'hidden',
+                                                          whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                                        }}
+                                                      >
+                                                        {(row.lowestLevel && row.functionLevel.name === "Core Level" || getParentNames(row)[2] == null ? "-" : getParentNames(row)[2])}
+                                                      </Typography>
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                                                      <Typography
+                                                        sx={{
+                                                          fontSize: 13,
+                                                          wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                                          overflow: 'hidden',
+                                                          whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                                        }}
+                                                      >
+                                                        <Tooltip arrow title={row.functionLevel.name} key={row.id} placement="left">
+                                                          <Typography sx={{ fontSize: 13 }}><b>{row.name}</b></Typography>
+                                                        </Tooltip>
+                                                         </Typography>
+                    </TableCell>
+										<TableCell component="th" scope="row">
+                                                      <Typography
+                                                        sx={{
+                                                          fontSize: 13,
+                                                          wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                                          overflow: 'hidden',
+                                                          whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                                        }}
+                                                      >
+                                                        {row.functionLevel?.name}
+                                                         </Typography>
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">
+                                                      <Typography
+                                                        sx={{
+                                                          fontSize: 13,
+                                                          wordBreak: 'break-word',   // Forza il testo a andare a capo anche senza spazi
+                                                          overflow: 'hidden',
+                                                          whiteSpace: 'normal'       // Permette al testo di andare a capo
+                                                        }}
+                                                      >
+                                                        {String(row.lowestLevel) === "true" ? (
+																													<DoneSharpIcon fontSize='small' sx={{ color: "green" }} />
+																												) : (
+																													<CloseSharpIcon fontSize='small' sx={{ color: "red" }} />
+																												)}
+                                                         </Typography>
+                    </TableCell>
                   <TableCell>
-                    <Grid container spacing={0}>
-                      <Grid item xs={6}>
-                        <IconButton onClick={(event) => handleOpenEditDialog(event, row)}>
-                          <EditSharpIcon fontSize='small' />
+										<Grid container spacing={0} justifyContent="flex-end" alignItems="center">
+                      <Grid item>
+                        <IconButton onClick={(event) => handleOpenEditDialog(row)}>
+                          <EditSharpIcon fontSize='small'/>
                         </IconButton>
                       </Grid>
-                      <Grid item xs={6}>
-                        <IconButton onClick={(event) => handleOpenConfirmationDialog(event, row)} size='small'>
+                      <Grid item>
+                        <IconButton onClick={(event) => handleOpenConfirmationDialog(row)} size='small'>
                           <DeleteSharpIcon fontSize='small' />
                         </IconButton>
                       </Grid>
