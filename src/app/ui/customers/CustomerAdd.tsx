@@ -65,7 +65,7 @@ export default function CustomerAdd() {
             <Typography sx={{ mt: 4, mb: 2, ml:4 }} variant="h6" component="div">
         Add New Customer
       </Typography>
-			<Divider sx={{ml:4}} />
+			<Divider sx={{ml:4, mr:4}} />
 			{/* Loading component */}
       {loading ? ( // Check if data is loading
           <Box display="flex" alignItems="center" justifyContent="center" sx={{mt:5, mb:5}}>

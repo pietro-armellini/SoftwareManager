@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { FormInputText } from "../form/FormInputText";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from 'react';
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, Step, StepLabel, Stepper } from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, IconButton, Step, StepLabel, Stepper } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { FormInputApplicationAdd } from '../form/FormInputApplicationAdd';
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -156,9 +156,11 @@ export default function ApplicationAdd() {
 
 	//second page of the Stepper
 	const secondPage = <>
-		<Button variant="contained" onClick={handleFunctionAdd} startIcon={<AddSharpIcon />}>
-			Function
-		</Button>
+		<IconButton	onClick={handleFunctionAdd} size="small" sx={{ml:0, mt: 3.8, mb: 2, mr: 4 }}
+							>
+							<AddSharpIcon fontSize="small" />
+									<Typography sx={{ fontSize: 17 }}>Function</Typography>
+							</IconButton>
 
 		{/* Table of the selected functions */}
 		<SelectedFunctionsList
@@ -169,15 +171,21 @@ export default function ApplicationAdd() {
 			setData={setSelectedLowestLevelFunctions}
 		/>
 
-		<Box display="flex" justifyContent="center" sx={{ mt: 5 }}>
-			<Button sx={{ mr: 3, p: 1 }} variant="outlined" onClick={handleBack}>
+		        <Grid container spacing={2} sx={{pl:4, pr:4, pb:4, pt:4}} >
+
+			<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
+			
+			<Button variant="outlined" onClick={() => handleBack()} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
 				Back
 			</Button>
-			<Button variant="contained" onClick={handleSubmit(onSubmit)}>
+			</Grid>
+			<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
+
+			<Button variant="contained" onClick={handleSubmit(onSubmit)} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
 				Add Application
 			</Button>
-
-		</Box>
+			</Grid>
+		</Grid>
 	</>
 
 	//first page of the Stepper
@@ -190,12 +198,12 @@ export default function ApplicationAdd() {
 			</FormGrid>
 
 			{/* Input: Name */}
-			<FormGrid item xs={6}>
+			<FormGrid item xs={12}  lg={6}>
 				<FormInputText name="name" control={control} label="Name" rules={{ required: "This field is required" }} />
 			</FormGrid>
 
 			{/* Input: Applications */}
-			<FormGrid item xs={6}>
+			<FormGrid item xs={12} lg={6}>
 				<FormInputApplicationAdd
 					control={control}
 					name={"applications"}
@@ -205,16 +213,17 @@ export default function ApplicationAdd() {
 					selectedValues={selectedApplications}
 					disabled={selectedLowestLevelFunctions.length != 0} />
 			</FormGrid>
+			<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
+			<Button variant="outlined" onClick={() => reset()} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
+							Reset Data
+			</Button>
+			</Grid>
+			<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
+				<Button variant="contained" onClick={handleNext} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
+					Next
+				</Button>
+				</Grid>
 		</Grid>
-
-		<Box display="flex" justifyContent="center" sx={{ mt: 5 }}>
-			<Button sx={{ mr: 3, p: 1 }} variant="outlined" onClick={() => { reset(); setSelectedLowestLevelFunctions([]); }}>
-				Reset Data
-			</Button>
-			<Button variant="contained" onClick={handleNext}>
-				Next
-			</Button>
-		</Box>
 	</>
 
 
@@ -224,9 +233,10 @@ export default function ApplicationAdd() {
 			{/* Add new function dialog */}
 			<Dialog open={showDialog} onClose={() => setShowDialog(false)} PaperProps={{
 				style: {
-					minWidth: 400,
-					maxWidth: 'none', // Set your desired width here
-				},
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 400, 
+        },
 			}}>
 				<DialogContent>
 					<FormGrid item xs={12}>
