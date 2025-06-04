@@ -240,7 +240,7 @@ export default function FunctionsTable() {
       </Grid>
       
       <Grid item sx={{ textAlign: "right"}}				>
-					<IconButton	href="/products/addproduct"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
+					<IconButton	href="/functions/addfunction"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
 					>
 						<AddSharpIcon fontSize="small" />
 						<Typography sx={{ fontSize: 17 }}>New Function</Typography>

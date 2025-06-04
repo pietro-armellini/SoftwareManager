@@ -279,7 +279,7 @@ export default function FirmwaresTable() {
       </Grid>
       
       <Grid item sx={{ textAlign: "right"}}				>
-					<IconButton	href="/products/addproduct"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
+					<IconButton	href="/firmwares/addfirmware"	size="small" sx={{ml:4, mt: 3.8, mb: 2, mr: 4 }}
 					>
 						<AddSharpIcon fontSize="small" />
 						<Typography sx={{ fontSize: 17 }}>New Firmware</Typography>
