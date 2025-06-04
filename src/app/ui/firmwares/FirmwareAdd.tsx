@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { FormInputText } from "../form/FormInputText";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from 'react';
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, Step, StepLabel, Stepper } from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, IconButton, Step, StepLabel, Stepper } from '@mui/material';
 import { FormInputDropdown } from '../form/FormInputDropdown';
 import { FormInputFirmwareAdd } from '../form/FormInputFirmwareAdd';
 import { FirmwareAddFormSchema } from '@/utility/ZodHelper';
@@ -193,9 +193,11 @@ export default function FirmwareAdd() {
 
 	//second page of the Stepper
 	const secondPage = <>
-		<Button variant="contained" onClick={handleFunctionAdd} startIcon={<AddSharpIcon />}>
-			Function
-		</Button>
+		<IconButton	onClick={handleFunctionAdd} size="small" sx={{ml:0, mt: 3.8, mb: 2, mr: 4 }}
+							>
+			<AddSharpIcon fontSize="small" />
+					<Typography sx={{ fontSize: 17 }}>Function</Typography>
+			</IconButton>
 
 		{/* Table of the selected functions */}
 		<SelectedFunctionsList
@@ -205,90 +207,73 @@ export default function FirmwareAdd() {
 			setTree={setTree}
 			setData={setSelectedLowestLevelFunctions}
 		/>
-		<Box display="flex" justifyContent="center" sx={{ mt: 5 }}>
+		<Grid container spacing={2} sx={{pl:4, pr:4, pb:4, pt:4}} >
+				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
+			
+					<Button variant="outlined" onClick={() => handleBack()} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
+						Back
+					</Button>
+					</Grid>
+				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
 
-			<Button sx={{ mr: 3, p: 1 }} variant="outlined" onClick={handleBack}>
-				Back
-			</Button>
-			<Button variant="contained" onClick={handleSubmit(onSubmit)}>
-				Add Firmware
-			</Button>
-		</Box>
+					<Button variant="contained" onClick={handleSubmit(onSubmit)} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
+						Add Firmware
+					</Button>
+				</Grid>
+			</Grid>
 	</>
 
 	//first page of the Stepper
 	const firstPage = <>
-		<Grid container spacing={3} sx={{ marginLeft: -6 }}>
-			<Grid item xs={12}>
-				<Typography sx={{ ml: 3, mt: 3 }} variant="h6" component="div">
+		<Grid container spacing={3}>
+			<Grid item xs={12} >
+				<Typography sx={{ mt: 3 }} variant="h6" component="div">
 					Firmware Information
 				</Typography>
 			</Grid>
-			<Grid item xs={12}>
-				<Grid sx={{ margin: 0 }} container spacing={3}>
-
-					{/* Input: Part Number */}
-					<Grid item xs={6}>
+			<Grid item xs={12} sm={6}>
 						<FormInputText name="partNumber" control={control} label="Part Number" rules={{ required: "This field is required" }} />
-					</Grid>
-
-					{/* Input: Version String */}
-					<Grid item xs={6}>
-						<FormInputText name="versionString" control={control} label="Version String" rules={{ required: "This field is required" }} />
-					</Grid>
-				</Grid>
 			</Grid>
-			<Grid item xs={4}>
-				<Grid sx={{ margin: 0 }} container spacing={3}>
 
-					{/* Input: Component Type */}
-					<FormGrid item xs={12}>
-						<FormInputDropdown
-							name="componentType"
-							control={control}
-							label="Component type"
-							options={componentTypesOption}
-						/>
-					</FormGrid>
-				</Grid>
+			{/* Input: Version String */}
+			<Grid item xs={12}  sm={6}>
+				<FormInputText name="versionString" control={control} label="Version String" rules={{ required: "This field is required" }} />
 			</Grid>
-			<Grid item xs={4}>
-				<Grid sx={{ margin: 0 }} container spacing={3}>
-
-					{/* Input: Product */}
-					<FormGrid item xs={12}>
-						<FormInputDropdown
-							name="product"
-							control={control}
-							label="Product"
-							options={productsOption}
-						/>
-					</FormGrid>
+			
+			{/* Input: Component Type */}
+			<Grid item xs={12} sm={6} lg={4}	>
+				<FormInputDropdown
+					name="componentType"
+					control={control}
+					label="Component type"
+					options={componentTypesOption}
+				/>
 				</Grid>
+				{/* Input: Product */}
+			<Grid item xs={12} sm={6} lg={4}>
+					<FormInputDropdown
+						name="product"
+						control={control}
+						label="Product"
+						options={productsOption}
+					/>
 			</Grid>
-			<Grid item xs={4}>
-				<Grid sx={{ margin: 0 }} container spacing={3}>
-
-					{/* Input: Customer */}
-					<FormGrid item xs={12}>
-						<FormInputDropdown
-							name="customer"
-							control={control}
-							label="Customer"
-							options={customersOption}
-						/>
-					</FormGrid>
-				</Grid>
+			<Grid item xs={12} sm={12} lg={4}>
+				{/* Input: Customer */}
+					<FormInputDropdown
+						name="customer"
+						control={control}
+						label="Customer"
+						options={customersOption}
+					/>
 			</Grid>
 			<Grid item xs={12}>
-				<Typography sx={{ ml: 3, mt: 3, mb: -3 }} variant="h6" component="div">
+				<Typography sx={{ ml: 0, mt: 3, mb: -3 }} variant="h6" component="div">
 					Functions
 				</Typography>
 			</Grid>
-			<Grid item xs={6}>
-				<Grid sx={{ margin: 0 }} container spacing={3}>
 					{/* Input: Firmwares */}
-					<Grid item xs={12}>
+					<Grid item xs={12} >
 						<FormInputFirmwareAdd
 							control={control}
 							name={"firmwares"}
@@ -299,8 +284,6 @@ export default function FirmwareAdd() {
 							disabled={selectedLowestLevelFunctions.length != 0}
 						/>
 					</Grid>
-				</Grid>
-			</Grid>
 		</Grid>
 		<Box display="flex" justifyContent="center" sx={{ mt: 5 }}>
 			<Button sx={{ mr: 3, p: 1 }} variant="outlined" onClick={() => { reset(); setSelectedLowestLevelFunctions([]); }}>
@@ -316,14 +299,15 @@ export default function FirmwareAdd() {
 
 
 	return (
-		<Box sx={{ flexGrow: 1, paddingLeft: 3, paddingRight: 3, marginTop: 0, marginBottom: 3 }} >
+		<Box sx={{ flexGrow: 1, paddingLeft: 4, paddingRight: 4, marginTop: 0, marginBottom: 3 }} >
 
 			{/* Add new function dialog */}
 			<Dialog open={showDialog} onClose={() => setShowDialog(false)} PaperProps={{
 				style: {
-					minWidth: 400,
-					maxWidth: 'none', // Set your desired width here
-				},
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 400, 
+        },
 			}}>
 				<DialogContent>
 					<FormGrid item xs={12}>

@@ -158,9 +158,9 @@ export default function ApplicationAdd() {
 	const secondPage = <>
 		<IconButton	onClick={handleFunctionAdd} size="small" sx={{ml:0, mt: 3.8, mb: 2, mr: 4 }}
 							>
-							<AddSharpIcon fontSize="small" />
-									<Typography sx={{ fontSize: 17 }}>Function</Typography>
-							</IconButton>
+			<AddSharpIcon fontSize="small" />
+					<Typography sx={{ fontSize: 17 }}>Function</Typography>
+			</IconButton>
 
 		{/* Table of the selected functions */}
 		<SelectedFunctionsList
@@ -171,39 +171,38 @@ export default function ApplicationAdd() {
 			setData={setSelectedLowestLevelFunctions}
 		/>
 
-		        <Grid container spacing={2} sx={{pl:4, pr:4, pb:4, pt:4}} >
-
-			<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
+			<Grid container spacing={2} sx={{pl:4, pr:4, pb:4, pt:4}} >
+				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
 			
-			<Button variant="outlined" onClick={() => handleBack()} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
-				Back
-			</Button>
-			</Grid>
-			<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
+					<Button variant="outlined" onClick={() => handleBack()} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
+						Back
+					</Button>
+					</Grid>
+				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
 
-			<Button variant="contained" onClick={handleSubmit(onSubmit)} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
-				Add Application
-			</Button>
+					<Button variant="contained" onClick={handleSubmit(onSubmit)} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
+						Add Application
+					</Button>
+				</Grid>
 			</Grid>
-		</Grid>
 	</>
 
 	//first page of the Stepper
 	const firstPage = <>
 		<Grid container spacing={3}>
-			<FormGrid item xs={12}>
+			<Grid item xs={12}>
 				<Typography sx={{ mt: 3 }} variant="h6" component="div">
 					Application Information
 				</Typography>
-			</FormGrid>
+			</Grid>
 
 			{/* Input: Name */}
-			<FormGrid item xs={12}  lg={6}>
+			<Grid item xs={12}  lg={6}>
 				<FormInputText name="name" control={control} label="Name" rules={{ required: "This field is required" }} />
-			</FormGrid>
+			</Grid>
 
 			{/* Input: Applications */}
-			<FormGrid item xs={12} lg={6}>
+			<Grid item xs={12} lg={6}>
 				<FormInputApplicationAdd
 					control={control}
 					name={"applications"}
@@ -212,7 +211,7 @@ export default function ApplicationAdd() {
 					onChange={() => setSelectedApplications(getValues("applications") as any)}
 					selectedValues={selectedApplications}
 					disabled={selectedLowestLevelFunctions.length != 0} />
-			</FormGrid>
+			</Grid>
 			<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
 			<Button variant="outlined" onClick={() => reset()} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
 							Reset Data
@@ -228,7 +227,7 @@ export default function ApplicationAdd() {
 
 
 	return (
-		<Box sx={{ flexGrow: 1, paddingLeft: 3, paddingRight: 3, marginTop: 0, marginBottom: 3 }} >
+		<Box sx={{ flexGrow: 1, paddingLeft: 4, paddingRight: 4, marginTop: 0, marginBottom: 3 }} >
 
 			{/* Add new function dialog */}
 			<Dialog open={showDialog} onClose={() => setShowDialog(false)} PaperProps={{
