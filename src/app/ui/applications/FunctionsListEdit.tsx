@@ -138,9 +138,10 @@ export function FunctionsListEdit({ application, handleCloseFromParentDialog }) 
 			{/* Add new function dialog */}
 			<Dialog open={showDialog} onClose={() => setShowDialog(false)} PaperProps={{
 				style: {
-					minWidth: 400,
-					maxWidth: 'none', // Set your desired width here
-				},
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 400, 
+        },
 			}}>
 				<DialogContent>
 					<FormGrid item xs={12}>

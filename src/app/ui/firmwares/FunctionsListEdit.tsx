@@ -217,9 +217,10 @@ export function FunctionsListEdit({ firmware, handleCloseFromParentDialog }) {
 			{/* Add new function dialog */}
 			<Dialog open={showDialog} onClose={() => setShowDialog(false)} PaperProps={{
 				style: {
-					minWidth: 400,
-					maxWidth: 'none', // Set your desired width here
-				},
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 400, 
+        },
 			}}>
 				<DialogContent>
 					<FormGrid item xs={12}>
@@ -240,9 +241,10 @@ export function FunctionsListEdit({ firmware, handleCloseFromParentDialog }) {
 			{/* Edit other information dialog */}
 			<Dialog open={showEditDialog} onClose={() => setShowEditDialog(false)} PaperProps={{
 				style: {
-					minWidth: 400,
-					maxWidth: 'none', // Set your desired width here
-				},
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 1000, 
+        },
 			}}>
 				<DialogContent>
 					<OtherOptionsEdit
@@ -364,7 +366,7 @@ export function FunctionsListEdit({ firmware, handleCloseFromParentDialog }) {
 											</Grid>
 
 											{/* remove button */}
-											<Grid item xs={6}>
+											<Grid item xs={6} sx={{paddingLeft: 1.5}}>
 												<IconButton onClick={(event) => handleRemove(row.id)} size='small'>
 													<ClearSharp fontSize='small' />
 												</IconButton>
@@ -379,15 +381,19 @@ export function FunctionsListEdit({ firmware, handleCloseFromParentDialog }) {
 				</TableContainer>
 
 			</div>
-			<div style={{ display: "flex", justifyContent: "center" }}>
-				<Button sx={{ mr: 2 }} variant="outlined" onClick={handleFunctionAdd} disabled={loading} startIcon={<AddSharpIcon />}>
-					Function
-				</Button>
-				<Button variant="contained" onClick={editFirmware}>
-					Edit Firmware
-				</Button>
 
-			</div>
+			<Grid container spacing={3}>
+				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
+					<Button variant="outlined" onClick={handleFunctionAdd} sx={{p:1, width: { xs: '50%', sm: 'auto' }}} startIcon={<AddSharpIcon />}>
+						Function
+					</Button>
+				</Grid>
+				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
+					<Button variant="contained" onClick={editFirmware} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
+						Edit Firmware
+					</Button>
+				</Grid>
+			</Grid>
 
 		</>
 	);
