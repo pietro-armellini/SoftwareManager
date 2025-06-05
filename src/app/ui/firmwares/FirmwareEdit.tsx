@@ -124,76 +124,59 @@ export default function FirmwareEdit({ elementToEdit, handleCloseFromParentDialo
 				</Box>
 			) : (
 				<form noValidate autoComplete="off">
-					<Grid container spacing={3} sx={{ marginLeft: -6 }}>
+					<Grid container spacing={3} sx={{ marginLeft: -3 }}>
 						<Grid item xs={12}>
-							<Typography sx={{ ml: 3, mt: 3 }} variant="h6" component="div">
+							<Typography sx={{ ml: 0, mt: 3 }} variant="h6" component="div">
 								Firmware Information
 							</Typography>
 						</Grid>
-						<Grid item xs={12}>
-							<Grid sx={{ margin: 0 }} container spacing={3}>
 
-								{/* Input: Part Number */}
-								<Grid item xs={6}>
-									<FormInputText name="partNumber" control={control} label="Part Number" rules={{ required: "This field is required" }} />
-								</Grid>
-
-								{/* Input: Version String */}
-								<Grid item xs={6}>
-									<FormInputText name="versionString" control={control} label="Version String" rules={{ required: "This field is required" }} />
-								</Grid>
+							{/* Input: Part Number */}
+							<Grid item xs={12} sm={6}>
+								<FormInputText name="partNumber" control={control} label="Part Number" rules={{ required: "This field is required" }} />
 							</Grid>
-						</Grid>
-						<Grid item xs={4}>
-							<Grid sx={{ margin: 0 }} container spacing={3}>
+
+							{/* Input: Version String */}
+							<Grid item xs={12} sm={6}>
+								<FormInputText name="versionString" control={control} label="Version String" rules={{ required: "This field is required" }} />
+							</Grid>
 
 								{/* Input: Component Type */}
-								<FormGrid item xs={12}>
+								<Grid item xs={12} sm={6} lg={4}>
 									<FormInputDropdown
 										name="componentType"
 										control={control}
 										label="Component type"
 										options={componentTypesOption}
 									/>
-								</FormGrid>
-							</Grid>
-						</Grid>
-						<Grid item xs={4}>
-							<Grid sx={{ margin: 0 }} container spacing={3}>
+								</Grid>
+						<Grid item xs={12} sm={6} lg={4}>
 								
 								{/* Input: Product */}
-								<FormGrid item xs={12}>
 									<FormInputDropdown
 										name="product"
 										control={control}
 										label="Product"
 										options={productsOption}
 									/>
-								</FormGrid>
-							</Grid>
 						</Grid>
-						<Grid item xs={4}>
-							<Grid sx={{ margin: 0 }} container spacing={3}>
 
 								{/* Input: Customer */}
-								<FormGrid item xs={12}>
+								<Grid item xs={12} lg={4}>
 									<FormInputDropdown
 										name="customer"
 										control={control}
 										label="Customer"
 										options={customersOption}
 									/>
-								</FormGrid>
-							</Grid>
 						</Grid>
 
-					</Grid>
-					<Box display="flex" justifyContent="center" sx={{ mt: 5 }}>
-
-						<Button variant="contained" onClick={handleSubmit(onSubmit)}>
-							Edit Firmware
+					<Grid item xs={12} sm={12} sx={{textAlign:{sm: "center", xs:"center"}}}>
+						<Button sx={{m:0, p:1}} variant="contained" onClick={handleSubmit(onSubmit)}>
+							Edit Product
 						</Button>
-					</Box>
+					</Grid>
+					</Grid>
 				</form>
 			)}
 		</Box>
