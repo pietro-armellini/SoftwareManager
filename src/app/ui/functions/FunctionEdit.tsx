@@ -149,12 +149,12 @@ export default function FunctionEdit({ elementToEdit, handleCloseFromParentDialo
             <Grid sx={{margin:0}} container spacing={3}>
 
 						{/* Input: Name */}
-						<FormGrid item xs={4}>
-                <FormInputText name="name" control={control} label="Name" /* rules={{ required: "This field is required" }} *//>
-              </FormGrid>
+						<Grid item xs={12} sm={6} lg={4}>
+							<FormInputText name="name" control={control} label="Name" /* rules={{ required: "This field is required" }} *//>
+						</Grid>
 
 							{/* Input: Function Level */}
-			        <FormGrid item xs={4}>
+			        <Grid item xs={12} sm={6} lg={4}>
                 <FormInputDropdown
                   name="functionLevel"
                   control={control}
@@ -162,10 +162,10 @@ export default function FunctionEdit({ elementToEdit, handleCloseFromParentDialo
                   options={functionLevelsOption}
                   onSelectedChange={updateFilteredOption}
                 />
-              </FormGrid>
+              </Grid>
 
 							{/* Input: Parent Function */}
-			        <FormGrid item xs={4}>
+			        <Grid item xs={12} lg={4}>
                 <FormInputFunctionAutocomplete
                   name="parentId"
                   control={control}
@@ -173,11 +173,11 @@ export default function FunctionEdit({ elementToEdit, handleCloseFromParentDialo
                   disabled={!watch("functionLevel") || getValues("functionLevel")==1}
                   options={selectedFunctions}
                 />
-              </FormGrid>
-              <FormGrid item xs={12}><Divider/></FormGrid>
+              </Grid>
+              <Grid item xs={12}><Divider/></Grid>
 
 							{/* Input: Lowest Level Function */}
-			        <FormGrid sx={{textAlign:'center'}} item xs={6}>
+			        <Grid item xs={12} sm={6} lg={4}>
                 <FormInputCheckbox
                   control={control}
                   name={"lowestLevelFunction"}
@@ -185,16 +185,19 @@ export default function FunctionEdit({ elementToEdit, handleCloseFromParentDialo
                   onSelectedChange={() => setValue("applications", [])}
                   disabled={getFunctionLevelStatus()}
                 />
-              </FormGrid>
+              </Grid>
 							
             </Grid>
           </Grid>
-        </Grid>
-        <Box display="flex" justifyContent="center" sx={{mt:5}}>
-        <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-          Edit Function
-        </Button>
-        </Box>
+					</Grid>
+      <Grid container spacing={3} sx={{marginLeft:-3, pt:3}}>
+
+					<Grid item xs={12} sm={12} sx={{textAlign:{sm: "center", xs:"center"}}}>
+						<Button sx={{m:0, p:1}} variant="contained" onClick={handleSubmit(onSubmit)}>
+							Edit Product
+						</Button>
+					</Grid>
+			</Grid>
       </form>
       )}
     </Box>

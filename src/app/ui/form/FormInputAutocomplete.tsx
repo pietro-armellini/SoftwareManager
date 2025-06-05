@@ -109,7 +109,7 @@ export const FormInputFunctionAutocomplete: React.FC<FormInputProps> = ({
   
 
   return (
-    <FormControl size={"small"}>
+    <FormControl size={"small"} fullWidth>
       <FormLabel>{label}</FormLabel>
       <Controller
         render={({ 
