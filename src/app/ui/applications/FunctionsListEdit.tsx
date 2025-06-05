@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import ClearSharp from '@mui/icons-material/ClearSharp';
 import { useState, useEffect } from 'react';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, IconButton, Typography } from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { extract, filterFunctionsByApplicationId, getChildrenIds, getNodeById, matchFunctionsByFunctionId } from '@/utility/DataHelper';
 import { FormGrid } from '@/styles/style';
 import { FormInputFunctionAutocomplete } from '../form/FormInputAutocomplete';
@@ -228,15 +228,18 @@ export function FunctionsListEdit({ application, handleCloseFromParentDialog }) 
 				</TableContainer>
 
 			</div>
-			<div style={{ display: "flex", justifyContent: "center" }}>
-				<Button sx={{ mr: 2 }} variant="outlined" onClick={handleFunctionAdd} disabled={loading} startIcon={<AddSharpIcon />}>
-					Function
-				</Button>
-				<Button variant="contained" onClick={editApplication}>
-					Edit Application
-				</Button>
-
-			</div>
+			<Grid container spacing={3}>
+				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
+					<Button variant="outlined" onClick={handleFunctionAdd} sx={{p:1, width: { xs: '50%', sm: 'auto' }}} disabled={loading} startIcon={<AddSharpIcon />}>
+						Function
+					</Button>
+				</Grid>
+				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "left", xs:"center"}}}>
+					<Button variant="contained" onClick={editApplication} sx={{p:1, width: { xs: '50%', sm: 'auto' }}}>
+						Edit Application
+					</Button>
+				</Grid>
+			</Grid>
 
 		</>
 	);

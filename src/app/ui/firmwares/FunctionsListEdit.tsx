@@ -384,7 +384,7 @@ export function FunctionsListEdit({ firmware, handleCloseFromParentDialog }) {
 
 			<Grid container spacing={3}>
 				<Grid item xs={12} sm={6} sx={{textAlign:{sm: "right", xs:"center"}}}>
-					<Button variant="outlined" onClick={handleFunctionAdd} sx={{p:1, width: { xs: '50%', sm: 'auto' }}} startIcon={<AddSharpIcon />}>
+					<Button variant="outlined" onClick={handleFunctionAdd} sx={{p:1, width: { xs: '50%', sm: 'auto' }}} disabled={loading} startIcon={<AddSharpIcon />}>
 						Function
 					</Button>
 				</Grid>
