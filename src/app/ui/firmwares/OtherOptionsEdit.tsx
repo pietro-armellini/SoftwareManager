@@ -81,60 +81,45 @@ export default function OtherOptionsEdit({ elementToEdit, setNewObject, handleCl
 			</Typography>
 			<Divider />
 			<form noValidate autoComplete="off">
-				<Grid container spacing={3} sx={{ marginLeft: -6 }}>
-					<Grid item xs={4}>
-						<Grid sx={{ margin: 0 }} container spacing={3}>
-
+				<Grid container spacing={3} sx={{ marginLeft: -3, mt:1 }}>
 							{/* Input: Status */}
-							<FormGrid item xs={12}>
+							<Grid item xs={12} sm={6} lg={4}> 
 								<FormInputDropdown
 									name="status"
 									control={control}
 									label="Status"
 									options={statusOptions}
 								/>
-							</FormGrid>
-						</Grid>
-					</Grid>
-					<Grid item xs={2}>
-						<Grid sx={{ margin: 0 }} container spacing={3}>
-
+							</Grid>
 							{/* Input: Status */}
-							<FormGrid item xs={12}>
+							<Grid item xs={12} sm={6} lg={2}>
 								<FormInputNumber
 									name={"effort"}
 									label={"Effort"}
 									control={control}
 								/>
-							</FormGrid>
-						</Grid>
-					</Grid>
+							</Grid>
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
-						<Grid item xs={6}>
-							<Grid sx={{ margin: 0 }} container spacing={3}>
-
 								{/* Input: Start Date */}
-								<FormGrid item xs={6}>
+								<Grid item xs={12} sm={6} lg={3}>
 									<FormInputDate
 										name={`startDate`}
 										label={"Start Date"}
 										control={control}
 									/>
-								</FormGrid>
+								</Grid>
 
 								{/* Input: End Date */}
-								<FormGrid item xs={6}>
+								<Grid item xs={12} sm={6} lg={3}>
 									<FormInputDate
 										name={`endDate`}
 										label={"End Date"}
 										control={control}
 									/>
-								</FormGrid>
-							</Grid>
-						</Grid>
+								</Grid>
 					</LocalizationProvider>
 					<Grid item xs={12}>
-						<Box display="flex" justifyContent="right" sx={{ mt: 1, mb: -100, mr: -1 }}>
+						<Box display="flex" justifyContent="right" sx={{ mt: 1, mb: -10, mr: 2 }}>
 							<Button variant="contained" onClick={handleSubmit(onSubmit)}>
 								Save Data
 							</Button>

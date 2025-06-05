@@ -119,9 +119,10 @@ export function SelectedFunctionsList({ firmwares, data, setData, tree, setTree 
 			{/* Edit other information dialog */}
 			<Dialog open={showEditDialog} onClose={() => setShowEditDialog(false)} PaperProps={{
 				style: {
-					minWidth: 400,
-					maxWidth: 'none', // Set your desired width here
-				},
+          minWidth: 100,
+					width:'100%',
+          maxWidth: 1000, 
+        },	
 			}}>
 				<DialogContent>
 					<OtherOptionsEdit
