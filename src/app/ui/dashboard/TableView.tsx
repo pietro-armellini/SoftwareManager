@@ -28,7 +28,7 @@ export function TableView({tree, handleOpenDialog}) {
   return (
     <Box>     
       <TableContainer component={Paper} sx={{paddingLeft:3, paddingRight:3, mt:2}}>
-        <Table sx={{ minWidth: 300, width:1150, marginBottom:3}} size="small" aria-label="a dense table">
+        <Table sx={{width:'100%', marginBottom:3}} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell sx={{ fontSize: 15}} align="left"><b>Strategic Layer</b> </TableCell>
