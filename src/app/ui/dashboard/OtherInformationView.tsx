@@ -12,7 +12,7 @@ import FirmwaresTablePercentage from '../firmwares/FirmwaresTablePercentage';
 */
 export function OtherInformationView({ firmware, application }) {
   return (
-    <Box sx={{ minWidth: 300, marginBottom:3}}>
+    <Box sx={{ minWidth: 0, marginBottom:3}}>
       {/* Only display if application is not null */}
       {application && <ApplcationBasicInformationDisplay application={application} />}
 

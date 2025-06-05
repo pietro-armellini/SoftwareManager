@@ -229,134 +229,198 @@ export default function Dashboard() {
 	};
 
 	return (
-		<Box
-			component="main"
+  <Box
+    component="main"
+    sx={{
+      backgroundColor: (theme) =>
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[100]
+          : theme.palette.grey[900],
+      flexGrow: 1,
+      height: '100vh',
+      overflow: 'auto',
+      px: 2,
+    }}
+  >
+    {/* Function's information dialog */}
+    <Dialog
+      open={showDialog}
+      onClose={() => setShowDialog(false)}
+      fullWidth
+      maxWidth="lg"
+    >
+      <DialogContent>
+        <FunctionInfo id={idInfo} />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setShowDialog(false)}>Cancel</Button>
+      </DialogActions>
+    </Dialog>
 
-			sx={{
-				backgroundColor: (theme) =>
-					theme.palette.mode === 'light'
-						? theme.palette.grey[100]
-						: theme.palette.grey[900],
-				flexGrow: 1,
-				height: '100vh',
-				overflow: 'auto',
-				width: 1150
-			}}>
+    <Toolbar />
 
-			{/* Function's information dialog */}
-			<Dialog open={showDialog} onClose={() => setShowDialog(false)} PaperProps={{
-				style: {
-					minWidth: 1000,
-					maxWidth: 'none', // Set your desired width here
-				},
-			}}>
-				<DialogContent>
-					<FunctionInfo id={idInfo} />
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => setShowDialog(false)}>Cancel </Button>
-				</DialogActions>
-			</Dialog>
-			<Toolbar />
+    <Container sx={{ mt: 4, mb: 4 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Paper
+            sx={{
+              p: 2,
+              width: '100%',
+              minHeight: 220,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {/* Dashboard heading */}
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h6" component="div">
+                  Dashboard
+                </Typography>
+              </Grid>
+            </Grid>
 
-			<Container sx={{ mt: 4, mb: 4, width: '100%' }}>
-				<Grid container spacing={0} >
-					<Grid>
-						<Paper sx={{ p: 0, width: 1250, minHeight: 220, display: 'flex', flexDirection: 'column' }}>
-							<Grid container spacing={0} sx={{ margin: 0 }}>
-								<FormGrid sx={{ mt: 4, mb: 2, ml: 4 }} xs={12}>
-									<Typography variant="h6" component="div">
-										Dashboard
-									</Typography>
-								</FormGrid>
-							</Grid>
+            {/* Loading */}
+            {loading ? (
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ mt: 5 }}
+              >
+                <CircularProgress />
+              </Box>
+            ) : (
+              <>
+                {/* Filters */}
+                <Grid container spacing={2} sx={{ mt: 2, mb: 2 }}>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <FormInputDeletableDropdown
+                      control={control}
+                      name="firmware"
+                      label="Firmware"
+                      options={firmwareOptions}
+                      onSelectedChange={onFilterChange}
+                     />
+                  </Grid>
 
-							{/* Loading component */}
-							{loading ? ( // Check if data is loading
-								<Box display="flex" alignItems="center" justifyContent="center" sx={{ mt: 5 }}>
-									<CircularProgress /> {/* Loading spinner */}
-								</Box>
-							) :
-								//When there are no data to display
+                  <Grid item xs={12} sm={6} md={3}>
+                    <FormInputDeletableDropdown
+                      name="application"
+                      control={control}
+                      label="Application"
+                      options={applicationOptions}
+                      onSelectedChange={onFilterChange}
+                     
+                    />
+                  </Grid>
 
-								<>
-										{/* Filters */}
-										<Grid container spacing={0} sx={{ margin: 0 }}>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <FormInputFunctionAutocomplete
+                      control={control}
+                      name="function"
+                      label="Function"
+                      options={data}
+                      onSelectedChange={onFilterChange}
+                    />
+                  </Grid>
 
-										<FormGrid sx={{ mt: 3, mb: 3, ml: 4 }} xs={2.5}>
-											<FormInputDeletableDropdown
-												control={control}
-												name={"firmware"}
-												label={"Firmware"}
-												options={firmwareOptions}
-												onSelectedChange={onFilterChange} />
+                  <Grid item xs={12} sm={6} md={3}>
+                    <FormInputDeletableDropdown
+                      control={control}
+                      name="status"
+                      label="Status"
+                      options={statusOption}
+                      onSelectedChange={onFilterChange}
+                      disabled={watch("firmware") === undefined}
+                    />
+                  </Grid>
+                </Grid>
 
-										</FormGrid>
-										<FormGrid sx={{ mt: 3, mb: 3, ml: 4 }} xs={2.5}>
-											<FormInputDeletableDropdown
-												name="application"
-												control={control}
-												label={'Application'}
-												options={applicationOptions}
-												onSelectedChange={onFilterChange} />
-										</FormGrid>
-										<FormGrid sx={{ mt: 3, mb: 3, ml: 4 }} xs={2.5}>
-											<FormInputFunctionAutocomplete
-												control={control}
-												name={"function"}
-												label={"Function"}
-												options={data}
-												onSelectedChange={onFilterChange} />
-										</FormGrid>
-										<FormGrid sx={{ mt: 3, mb: 3, ml: 4 }} xs={2.5}>
-											<FormInputDeletableDropdown
-												control={control}
-												name={"status"}
-												label={"Status"}
-												options={statusOption}
-												onSelectedChange={onFilterChange}
-												disabled={(watch("firmware") == undefined)} />
-										</FormGrid>
-									</Grid>
+                {/* Tabs */}
+                <Box sx={{ width: '100%' }}>
+                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs
+                      value={tabValue}
+                      variant="fullWidth"
+                      onChange={handleChange}
+                      aria-label="tabs"
+                    >
+                      <Tab label="Tree View" {...a11yProps(0)} />
+                      <Tab label="Table View" {...a11yProps(1)} />
+                      <Tab label="Other Information" {...a11yProps(2)} />
+                    </Tabs>
+                  </Box>
 
-									{/* Tab view: Tree view, Table view, Other information */}
-									<Box sx={{ width: '100%' }}>
-										<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-											<Tabs value={tabValue} variant="fullWidth" onChange={handleChange} aria-label="basic tabs example">
-												<Tab label="Tree View" {...a11yProps(0)} />
-												<Tab label="Table View" {...a11yProps(1)} />
-												<Tab label="Other Information" {...a11yProps(2)} />
-											</Tabs>
-										</Box>
+                  {/* Tree View */}
+                  <CustomTabPanel value={tabValue} index={0}>
+                    {watch("firmware") !== undefined && (
+                      <LegendTree
+                        includedPercentage={includedPercentage}
+                        showPercentage={
+                          watch("firmware") !== undefined &&
+                          watch("application") !== undefined
+                        }
+                        finishedPercentage={finishedPercentage}
+                      />
+                    )}
+                    <ReactECharts
+                      data={tree}
+                      data_size={displayDataSize}
+                      handleOpenDialog={handleOpenDialog}
+                      applyColors={watch("firmware") !== undefined}
+                    />
+                  </CustomTabPanel>
 
-										{/* Tree view */}
-										<CustomTabPanel value={tabValue} index={0}>
-											{/* Show Legend only if firmware is selected */}
-											{(watch("firmware") != undefined) ? (<LegendTree includedPercentage={includedPercentage} showPercentage={(watch("firmware") != undefined && (watch("application") != undefined))} finishedPercentage={finishedPercentage} />) : (null)}
-											<ReactECharts data={tree} data_size={displayDataSize} handleOpenDialog={handleOpenDialog} applyColors={(watch("firmware") != undefined)} />
-										</CustomTabPanel>
+                  {/* Table View */}
+                  <CustomTabPanel value={tabValue} index={1}>
+                    {watch("firmware") !== undefined && (
+                      <LegendTable
+                        includedPercentage={includedPercentage}
+                        showPercentage={
+                          watch("firmware") !== undefined &&
+                          watch("application") !== undefined
+                        }
+                        finishedPercentage={finishedPercentage}
+                      />
+                    )}
+                    <TableView
+                      tree={tree}
+                      handleOpenDialog={handleOpenDialog}
+                    />
+                  </CustomTabPanel>
 
-										{/* Table view */}
-										<CustomTabPanel value={tabValue} index={1}>
-											{/* Show Legend only if firmware is selected */}
-											{(watch("firmware") != undefined) ? (<LegendTable includedPercentage={includedPercentage} showPercentage={(watch("firmware") != undefined && (watch("application") != undefined))} finishedPercentage={finishedPercentage} />) : (null)}
-											<TableView tree={tree} handleOpenDialog={handleOpenDialog} />
-										</CustomTabPanel>
+                  {/* Other Info */}
+                  <CustomTabPanel value={tabValue} index={2}>
+                    <OtherInformationView
+                      firmware={
+                        watch("firmware") !== undefined
+                          ? firmwareOptions.find(
+                              (option) =>
+                                option.id === getValues("firmware")
+                            )
+                          : null
+                      }
+                      application={
+                        watch("application") !== undefined
+                          ? applicationOptions.find(
+                              (option) =>
+                                option.id === getValues("application")
+                            )
+                          : null
+                      }
+                    />
+                  </CustomTabPanel>
+                </Box>
+              </>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+  </Box>
+);
 
-										{/* Other Information */}
-										<CustomTabPanel value={tabValue} index={2}>
-											<OtherInformationView
-												//show firmware and application data based on the filter selection
-												firmware={(watch("firmware") != undefined ? firmwareOptions.find((option) => option.id === getValues("firmware")) : null)}
-												application={(watch("application") != undefined ? applicationOptions.find((option) => option.id === getValues("application")) : null)} />
-										</CustomTabPanel>
-									</Box></>}
-						</Paper>
-					</Grid>
-				</Grid>
-			</Container>
-		</Box>
-	);
 }
 
 

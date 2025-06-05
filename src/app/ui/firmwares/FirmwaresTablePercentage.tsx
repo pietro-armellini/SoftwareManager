@@ -41,8 +41,8 @@ export default function FirmwaresTablePercentage(application:any) {
           <TableHead>
             <TableRow>
 							{/* Columns names */}
-              <TableCell sx={{ fontSize: 15, minWidth: 200}}><b>Part Number</b></TableCell>
-              <TableCell sx={{ fontSize: 15, minWidth: 200}}><b>Version String</b></TableCell>
+              <TableCell sx={{ fontSize: 15}}><b>Part Number</b></TableCell>
+              <TableCell sx={{ fontSize: 15}}><b>Version String</b></TableCell>
               <TableCell sx={{ fontSize: 15}} align='right'><b>Included</b></TableCell>
               <TableCell sx={{ fontSize: 15}}align="right" ><b>Completed</b></TableCell>
             </TableRow>

@@ -28,7 +28,7 @@ export const FormInputDeletableDropdown: React.FC<FormInputProps> = ({
   };
 
   return (
-    <FormControl size={"small"} disabled={disabled}>
+    <FormControl size={"small"} disabled={disabled} fullWidth>
       <FormLabel>
               {label}
       </FormLabel>

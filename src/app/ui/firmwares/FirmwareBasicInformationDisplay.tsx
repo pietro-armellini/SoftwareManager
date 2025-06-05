@@ -18,27 +18,27 @@ export function FirmwareBasicInformationDisplay({ firmware }) {
                 <Grid container>
 
 									{/* Part Number */}
-                  <Grid item xs={2.5}>
+                  <Grid item xs={12} sm={6}  lg={2.5}>
                     <ListItemText secondary="Part Number" primary={<Typography sx={{ fontSize: 14}}>{firmware?.partNumber}</Typography>}></ListItemText>
                   </Grid>
 
 									{/* Version String */}
-                  <Grid item xs={2.5}>
+                  <Grid item xs={12} sm={6} lg={2.5}>
                     <ListItemText secondary="Version String" primary={<Typography sx={{ fontSize: 14}}>{firmware?.versionString}</Typography>}></ListItemText>
                   </Grid>
 
 									{/* Component Type */}
-                  <Grid item xs={2.5}>
+                  <Grid item xs={12} sm={6} lg={2.5}>
                     <ListItemText secondary="Component Type" primary={<Typography sx={{ fontSize: 14}}>{firmware?.componentType?.name}</Typography>}></ListItemText>
                   </Grid>
 
 									{/* Customer */}
-                  <Grid item xs={2.5}>
+                  <Grid item xs={12} sm={6} lg={2.5}>
                     <ListItemText secondary="Customer" primary={<Typography sx={{ fontSize: 14}}>{firmware?.customer?.name}</Typography>}></ListItemText>
                   </Grid>
 
 									{/* Product */}
-                  <Grid item xs={2}>
+                  <Grid item xs={12} sm={6}lg={2}>
                     <ListItemText secondary="Product" primary={<Typography sx={{ fontSize: 14}}>{firmware?.product?.name}</Typography>}></ListItemText>
                   </Grid>
                 </Grid>
