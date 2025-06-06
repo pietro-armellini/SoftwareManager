@@ -101,7 +101,7 @@ export const LegendTable = ({includedPercentage, finishedPercentage, showPercent
       <Grid item xs={6}>
         <Grid container>
           {legendItems.map((item, index) => (
-            <Grid item xs={4} key={index}>
+            <Grid item xs={12} sm={6} xl={4} key={index}>
               <Box display="flex" alignItems="baseline">
                 <Box
                   sx={{

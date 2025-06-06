@@ -40,152 +40,151 @@ export default function FunctionInfo({ id }) {
 
 
 	return (
-		<Box sx={{ flexGrow: 1, paddingLeft: 3, paddingRight: 3, marginTop: 0, marginBottom: 3 }} >
-			<Grid container>
-				<Grid item xs={10}>
-					<Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-						Lowest Level Function Information
-					</Typography>
-				</Grid>
-				<Grid item xs={2}>
-					{loading ? ( // Check if data is loading
-						<Box display='flex'
-							justifyContent='right'
-							sx={{ mt: 3 }}>
-							<CircularProgress size="2rem" /> {/* Loading spinner */}
-						</Box>
-					) : null}
-				</Grid>
-			</Grid>
-			<Divider />
-			<Grid container>
-				<Grid item xs={8}>
-					<List dense>
-						<ListItem >
-							<Grid container>
-								<Grid item xs={12}>
-									<ListItemText secondary="Name" primary={<Typography sx={{ fontSize: 16 }}>{data.name}</Typography>}></ListItemText>
-								</Grid>
-								<Grid item xs={12}>
-									<ListItemText secondary="Function Level" primary={<Typography sx={{ fontSize: 16 }}>{data.functionLevel?.name}</Typography>}></ListItemText>
-								</Grid>
-							</Grid>
-						</ListItem>
-					</List>
-				</Grid>
-				<Grid item xs={4}>
+  <Box sx={{ flexGrow: 1, px: { xs: 2, sm: 3 }, mt: 0, mb: 3 }}>
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs={12} sm={10}>
+        <Typography sx={{ mt: 4, mb: 2 }} variant="h6">
+          Lowest Level Function Information
+        </Typography>
+      </Grid>
+      <Grid item xs={12} sm={2}>
+        {loading && (
+          <Box display="flex" justifyContent={{ xs: 'center', sm: 'flex-end' }} sx={{ mt: 3 }}>
+            <CircularProgress size="2rem" />
+          </Box>
+        )}
+      </Grid>
+    </Grid>
 
-					{/* Firmwares Table */}
-					<TableContainer>
-						<Typography sx={{ mt: 2, mb: 2 }} variant="h6" component="div">
-							Applications
-						</Typography>
-						<Table sx={{ marginBottom: 3 }} size="small" aria-label="a dense table">
-							<TableHead>
-								<TableRow>
-									<TableCell sx={{ fontSize: 16 }}><b>Name</b></TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{data.functionApplication?.map((row) => (
-									<TableRow
-										key={row.id}
-										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-									>
-										<TableCell component="th" scope="row">
-											<Typography>{row.application.name}</Typography>
-										</TableCell>
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</Grid>
-			</Grid>
+    <Divider sx={{ mb: 2 }} />
 
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={8}>
+        <List dense>
+          <ListItem>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <ListItemText
+                  secondary="Name"
+                  primary={<Typography sx={{ fontSize: 16 }}>{data.name}</Typography>}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <ListItemText
+                  secondary="Function Level"
+                  primary={<Typography sx={{ fontSize: 16 }}>{data.functionLevel?.name}</Typography>}
+                />
+              </Grid>
+            </Grid>
+          </ListItem>
+        </List>
+      </Grid>
 
-			{/* Firmwares Table */}
-			<TableContainer>
-				<Typography sx={{ mt: 0, mb: 2 }} variant="h6" component="div">
-					Firmwares
-				</Typography>
-				<Table sx={{ minWidth: 650, marginBottom: 3 }} size="small" aria-label="a dense table">
-					<TableHead>
-						<TableRow>
-							<TableCell sx={{ fontSize: 16 }}><b>Part Number</b></TableCell>
-							<TableCell sx={{ fontSize: 16 }} align="left"><b>Version String</b></TableCell>
-							<TableCell sx={{ fontSize: 16 }} align="left"><b>Component Type</b></TableCell>
-							<TableCell sx={{ fontSize: 16 }} align="left"><b>Status</b></TableCell>
-							<TableCell sx={{ fontSize: 16 }} align="left"><b>Product</b></TableCell>
-							<TableCell sx={{ fontSize: 16 }} align="left"><b>Custumer</b></TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{data.lowestLevelFunctionStatus?.map((row) => (
-							<TableRow
-								key={row.id}
-								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-							>
-								<TableCell component="th" scope="row">
-									<Typography>{row.firmware.partNumber}</Typography>
-								</TableCell>
-								<TableCell component="th" scope="row">
-									<Typography>{row.firmware.versionString}</Typography>
-								</TableCell>
-								<TableCell component="th" scope="row">
-									<Typography>{row.firmware.componentType.name}</Typography>
-								</TableCell>
-								<TableCell component="th" scope="row">
-									<Typography>
-										{row.functionStatus.name}
-										{(row.effort != null || row.startDate != null || row.startDate != null) ? (
-											//Tooltip to see data related to the firmware connection
-											<ClickAwayListener onClickAway={handleTooltipClose}>
-												<Tooltip
-													PopperProps={{
-														disablePortal: true,
-													}}
-													onClose={handleTooltipClose}
-													open={open}
-													disableFocusListener
-													disableHoverListener
-													disableTouchListener
-													title={
-														<>
-															{row.effort != null && (
-																<Typography sx={{ fontSize: 12 }}>Effort: <b>{row.effort}</b></Typography>
-															)}
+      <Grid item xs={12} sm={4}>
+        <Typography sx={{ mt: 2, mb: 2 }} variant="h6">
+          Applications
+        </Typography>
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ fontSize: 16 }}><b>Name</b></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.functionApplication?.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell>
+                    <Typography>{row.application.name}</Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Grid>
 
-															{row.startDate != null && (
-																<Typography sx={{ fontSize: 12 }}>Start: <b>{row.startDate.substring(0, 10)}</b></Typography>
-															)}
+    {/* Firmwares Table */}
+    <Typography sx={{ mt: 4, mb: 2 }} variant="h6">
+      Firmwares
+    </Typography>
+    <TableContainer>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell><b>Part Number</b></TableCell>
+            <TableCell align="left"><b>Version String</b></TableCell>
+            <TableCell align="left"><b>Component Type</b></TableCell>
+            <TableCell align="left"><b>Status</b></TableCell>
+            <TableCell align="left"><b>Product</b></TableCell>
+            <TableCell align="left"><b>Customer</b></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.lowestLevelFunctionStatus?.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>
+                <Typography>{row.firmware.partNumber}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>{row.firmware.versionString}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>{row.firmware.componentType.name}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  {row.functionStatus.name}
+                  {(row.effort || row.startDate || row.endDate) && (
+                    <ClickAwayListener onClickAway={handleTooltipClose}>
+                      <Tooltip
+                        PopperProps={{ disablePortal: true }}
+                        onClose={handleTooltipClose}
+                        open={open}
+                        disableFocusListener
+                        disableHoverListener
+                        disableTouchListener
+                        title={
+                          <>
+                            {row.effort && (
+                              <Typography sx={{ fontSize: 12 }}>
+                                Effort: <b>{row.effort}</b>
+                              </Typography>
+                            )}
+                            {row.startDate && (
+                              <Typography sx={{ fontSize: 12 }}>
+                                Start: <b>{row.startDate.substring(0, 10)}</b>
+                              </Typography>
+                            )}
+                            {row.endDate && (
+                              <Typography sx={{ fontSize: 12 }}>
+                                End: <b>{row.endDate.substring(0, 10)}</b>
+                              </Typography>
+                            )}
+                          </>
+                        }
+                      >
+                        <IconButton onClick={handleTooltipOpen} size="small">
+                          <InfoSharpIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </ClickAwayListener>
+                  )}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>{row.firmware.product.name}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>{row.firmware.customer.name}</Typography>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Box>
+);
 
-															{row.endDate != null && (
-																<Typography sx={{ fontSize: 12 }}>End: <b>{row.endDate.substring(0, 10)}</b></Typography>
-															)}
-														</>
-													}
-												>
-													<IconButton onClick={handleTooltipOpen} size='small'>
-														<InfoSharpIcon fontSize='small' />
-													</IconButton>
-												</Tooltip>
-											</ClickAwayListener>
-										) : null}
-									</Typography>
-								</TableCell>
-								<TableCell component="th" scope="row">
-									<Typography>{row.firmware.product.name}</Typography>
-								</TableCell>
-								<TableCell component="th" scope="row">
-									<Typography>{row.firmware.customer.name}</Typography>
-								</TableCell>
-
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</TableContainer>
-		</Box>
-	);
 }

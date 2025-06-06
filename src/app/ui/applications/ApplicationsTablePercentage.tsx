@@ -38,11 +38,11 @@ export default function ApplicationsTablePercentage(firmware: any) {
 			
 			{/* Main Table */}
 			<TableContainer component={Paper} sx={{ paddingLeft: 3, paddingRight: 3, mt: 2 }}>
-				<Table sx={{ minWidth: 300, marginBottom: 3 }} size="small" aria-label="a dense table">
+				<Table sx={{marginBottom: 3 }} size="small" aria-label="a dense table">
 					<TableHead>
 						<TableRow>
 							{/* Columns names */}
-							<TableCell sx={{ fontSize: 15, minWidth: 200 }}><b>Name</b></TableCell>
+							<TableCell sx={{ fontSize: 15}}><b>Name</b></TableCell>
 							<TableCell sx={{ fontSize: 15 }} align='right'><b>Included</b></TableCell>
 							<TableCell sx={{ fontSize: 15 }} align="right" ><b>Completed</b></TableCell>
 						</TableRow>

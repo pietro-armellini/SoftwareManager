@@ -264,7 +264,10 @@ export default function Dashboard() {
         <Grid item xs={12}>
           <Paper
             sx={{
-              p: 2,
+              pt:2,
+							pl:3,
+							pr:3,
+							pb: 2,
               width: '100%',
               minHeight: 220,
               display: 'flex',
