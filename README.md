@@ -50,6 +50,6 @@ npm run build
 ```
 Start the build:
 ```
-npm run build
+npm run start
 ```
 By default, the application will start running on http://localhost:3000.
