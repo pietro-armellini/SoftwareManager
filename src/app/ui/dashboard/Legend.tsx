@@ -68,7 +68,7 @@ export const LegendTree = ({includedPercentage, finishedPercentage, showPercenta
       flexDirection: 'column',
       gap: 2,
       alignItems: 'flex-start',
-      minWidth: 220, // 👈 larghezza coerente per entrambe le barre
+      minWidth: 150, // 👈 larghezza coerente per entrambe le barre
     }}
   >
     <Box sx={{ width: '100%' }}>
