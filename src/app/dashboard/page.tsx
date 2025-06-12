@@ -378,7 +378,7 @@ export default function Dashboard() {
                   {/* Table View */}
                   <CustomTabPanel value={tabValue} index={1}>
                     {watch("firmware") !== undefined && (
-                      <LegendTable
+                      <LegendTree
                         includedPercentage={includedPercentage}
                         showPercentage={
                           watch("firmware") !== undefined &&

@@ -18,71 +18,84 @@ export const LegendTree = ({includedPercentage, finishedPercentage, showPercenta
 	React.useEffect(() => {
 	}, []);
 
-  return (
-    <Box
+		return (
+  <Grid container spacing={2} sx={{ width: '100%', pl: 2 }}>
+    
+    {/* Legenda */}
+    <Grid item xs={12} md={6}>
+      <Grid container spacing={1}>
+        {legendItems.map((item, index) => (
+          <Grid item xs={12} key={index}>
+            <Box display="flex" alignItems="center">
+              <Box
+                sx={{
+                  width: 12,
+                  height: 12,
+                  minWidth: 12,
+                  minHeight: 12,
+                  border: `2px solid ${item.color}`,
+                  borderRadius: '50%',
+                  marginRight: '8px',
+                  flexShrink: 0,
+                }}
+              />
+              <Typography sx={{ fontSize: 13 }}>{item.label}</Typography>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Grid>
+
+    {/* Percentuali, sempre a destra anche su XS */}
+    {showPercentage && (
+  <Grid
+  item
+  xs={12}
+  md={6}
+  lg={6}
+  sx={{
+    display: 'flex',
+    justifyContent: {
+      xs: 'flex-start',
+      md: 'flex-end',
+    },
+  }}
+>
+  <Box
     sx={{
-      position: 'absolute', // Position it absolutely
-      backgroundColor: 'white', // Optional: background color for better visibility
-      paddingTop:0, // Optional: padding for some space around
-      paddingLeft:2,
-      width:"95%",
+      pb: 2,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      alignItems: 'flex-start',
+      minWidth: 220, // 👈 larghezza coerente per entrambe le barre
     }}
   >
-    <Grid container spacing={0} >
-      <Grid item xs={6}>
-        <Grid container>
-          {legendItems.map((item, index) => (
-            <Grid item xs={12} key={index}>
-              <Box display="flex" alignItems="center">
-                {/* Color square */}
-                <Box
-                  sx={{
-                    width: 10,
-                    height: 10,
-                    border: `2px solid ${item.color}`, // Border with color
-                    borderRadius: '50%', // Circular shape
-                    marginRight: '8px',
-                  }}
-                />
-                {/* Label */}
-                <Typography sx={{fontSize:13}} variant="body1">{item.label}</Typography>
-              </Box>
-            </Grid>
-          ))}
-          </Grid>
-        </Grid>
-
-				{/* Show information about the couple application and filter when they are both selected */}
-        {(showPercentage?(
-                      <>
-                      <Grid item xs={3.75}>
-                      </Grid>
-                      <Grid item xs={2}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={12}>
-                            <Tooltip title="Percentage of application's functions added to the firmware">
-                              <Typography sx={{ fontSize: 13 }} variant="body1">
-                                  Functions Included: <b>{includedPercentage}%</b>
-                              </Typography>
-                            </Tooltip>
-                            <BorderLinearProgress_blue variant="determinate" value={includedPercentage} />
-                          </Grid>
-                          <Grid item xs={12}>
-                            <Tooltip title="Percentage of included functions already 'finished'">
-                              <Typography sx={{ fontSize: 13 }} variant="body1">
-                                  Functions Completed: <b>{finishedPercentage}%</b>
-                              </Typography>
-                            </Tooltip>
-                            <BorderLinearProgress_green variant="determinate" value={finishedPercentage} />
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      
-                    </>
-        ):null)}
-    </Grid>
+    <Box sx={{ width: '100%' }}>
+      <Tooltip title="Percentage of application's functions added to the firmware">
+        <Typography sx={{ fontSize: 13 }}>
+          Functions Included: <b>{includedPercentage}%</b>
+        </Typography>
+      </Tooltip>
+      <BorderLinearProgress_blue variant="determinate" value={includedPercentage} />
     </Box>
-  );
+    <Box sx={{ width: '100%' }}>
+      <Tooltip title="Percentage of included functions already 'finished'">
+        <Typography sx={{ fontSize: 13 }}>
+          Functions Completed: <b>{finishedPercentage}%</b>
+        </Typography>
+      </Tooltip>
+      <BorderLinearProgress_green variant="determinate" value={finishedPercentage} />
+    </Box>
+  </Box>
+</Grid>
+
+)}
+
+  </Grid>
+);
+
+
 };
 
 //Component to show the legen in the table view
@@ -122,9 +135,6 @@ export const LegendTable = ({includedPercentage, finishedPercentage, showPercent
 				{/* Show information about the couple application and filter when they are both selected */}
 				{(showPercentage?(
                       <>
-                        <Grid item xs={3.75}>
-                        </Grid>
-                        <Grid item xs={2}>
                           <Grid container spacing={2}>
                             <Grid item xs={12}>
                               <Tooltip title="Percentage of application's functions added to the firmware">
@@ -143,7 +153,6 @@ export const LegendTable = ({includedPercentage, finishedPercentage, showPercent
                               <BorderLinearProgress_green variant="determinate" value={finishedPercentage} />
                             </Grid>
                           </Grid>
-                        </Grid>
                         
                       </>
         ):null)}
